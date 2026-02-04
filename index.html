@@ -499,17 +499,17 @@
       title: "Un Viaggio Culinario Speciale",
       heroineName: "Maria Luisa",
       dishName: "Ramen al miso",
-      targetIngredients: ["Miso paste","Ramen noodles","Chashu (pork)","Ajitama (uovo)","Spinaci/Bok choy","Mais","Bamboo shoots","Aglio & Zenzero"],
-      // DOMANDE più difficili e interessanti
+      targetIngredients: ["Aglio & Zenzero","Spinaci/Bok choy","Cipollotto (Negi)","Bamboo shoots","Chashu (pork)","Ajitama (uovo)","Miso paste","Ramen noodles"],
+      // DOMANDE in ordine di scoperta (dal vago al rivelatore)
       questions: [
-        { q: "Nella cucina giapponese, quale ingrediente fermentato di soia dona il caratteristico sapore 'umami' profondo?", choices:["Miso","Salsa Worcestershire","Aceto balsamico","Tahini"], correctIndex:0, ingredient:"Miso paste", hint:"Si usa anche per zuppe tradizionali..." },
-        { q: "Questi noodles vengono preparati con farina di grano, acqua, sale e 'kansui' (acqua alcalina). Come si chiamano?", choices:["Udon","Soba","Ramen","Somen"], correctIndex:2, ingredient:"Ramen noodles", hint:"Condividono il nome con un piatto molto famoso!" },
-        { q: "In Giappone, come si chiama la carne di maiale brasata lentamente nella salsa di soia, spesso arrotolata?", choices:["Tonkatsu","Chashu","Gyudon","Karaage"], correctIndex:1, ingredient:"Chashu (pork)", hint:"Si scioglie in bocca..." },
-        { q: "Come viene chiamato l'uovo marinato giapponese con il tuorlo morbido e cremoso, tipico della cucina nipponica?", choices:["Onsen tamago","Tamagoyaki","Ajitama","Medama-yaki"], correctIndex:2, ingredient:"Ajitama (uovo)", hint:"'Aji' significa sapore, 'tama' significa uovo..." },
-        { q: "Quale verdura asiatica a foglia verde, dal nome che suona come 'piccolo cavolo', si usa spesso nelle zuppe orientali?", choices:["Pak choi (Bok choy)","Cavolo cappuccio","Lattuga iceberg","Radicchio"], correctIndex:0, ingredient:"Spinaci/Bok choy", hint:"Ha un gambo bianco croccante e foglie verdi." },
-        { q: "Nella variante di Sapporo, quale ingrediente giallo e dolce viene aggiunto come topping croccante?", choices:["Zucca","Peperone","Mais dolce","Ananas"], correctIndex:2, ingredient:"Mais", hint:"Cresce sulla pannocchia!" },
-        { q: "Il 'Menma' è un ingrediente fermentato e croccante molto usato in Asia. Da quale pianta proviene?", choices:["Bambù","Palma","Felce","Canna da zucchero"], correctIndex:0, ingredient:"Bamboo shoots", hint:"I panda ne vanno pazzi!" },
-        { q: "Quali due ingredienti aromatici, uno pungente e uno piccante, formano la base di molti brodi asiatici?", choices:["Cipolla e peperoncino","Aglio e zenzero","Scalogno e curcuma","Porro e wasabi"], correctIndex:1, ingredient:"Aglio & Zenzero", hint:"Uno è una radice, l'altro un bulbo..." }
+        { q: "Iniziamo dalle basi. Quale coppia di aromi freschi è indispensabile per dare profumo e un tocco piccante al soffritto iniziale?", choices:["Cipolla e sedano","Aglio e zenzero","Basilico e prezzemolo","Carota e cipolla"], correctIndex:1, ingredient:"Aglio & Zenzero", hint:"Una radice e un bulbo molto usati in Asia." },
+        { q: "Per dare colore e salute al piatto, sbollentiamo velocemente queste verdure a foglia verde...", choices:["Lattuga","Spinaci o Bok choy","Rucola","Verza"], correctIndex:1, ingredient:"Spinaci/Bok choy", hint:"Foglie verdi che appassiscono in fretta nel brodo caldo." },
+        { q: "Tagliato a rondelle sottili, questo ingrediente fresco aggiunge una nota croccante e pungente alla fine...", choices:["Cipollotto (Negi)","Peperone","Zucchina","Prezzemolo"], correctIndex:0, ingredient:"Cipollotto (Negi)", hint:"Simile alla cipolla ma verde e lungo." },
+        { q: "Un tocco di croccantezza particolare: germogli fermentati che vengono da una pianta altissima...", choices:["Asparagi","Bamboo shoots (Menma)","Cuori di palma","Carciofi"], correctIndex:1, ingredient:"Bamboo shoots", hint:"Il cibo preferito dei panda!" },
+        { q: "Passiamo alla sostanza: fette di maiale brasato lentamente che si sciolgono in bocca. Come si chiamano?", choices:["Prosciutto cotto","Chashu","Cotoletta","Spezzatino"], correctIndex:1, ingredient:"Chashu (pork)", hint:"Cotto a lungo nella salsa di soia e mirin." },
+        { q: "Non è un semplice uovo sodo, ma un uovo marinato col tuorlo cremoso. Qual è il suo nome?", choices:["Uovo in camicia","Frittata","Ajitama","Uovo strapazzato"], correctIndex:2, ingredient:"Ajitama (uovo)", hint:"Marinato per ore assorbe sapore e colore." },
+        { q: "L'anima sapida della nostra zuppa. Una pasta fermentata che dona un gusto profondo...", choices:["Concentrato di pomodoro","Miso","Pesto","Senape"], correctIndex:1, ingredient:"Miso paste", hint:"Fatto con soia fermentata." },
+        { q: "E infine, l'ingrediente che definisce il piatto! Pasta elastica e gialla fatta per essere 'slurpata'...", choices:["Spaghetti","Riso","Ramen noodles","Tagliatelle"], correctIndex:2, ingredient:"Ramen noodles", hint:"L'ingrediente che dà il nome al piatto!" }
       ],
       allowRetry: true,
       maxMistakes: 3
@@ -962,7 +962,7 @@
       // mapping semplice per icone
       const m = {
         "Miso paste":"🧂","Ramen noodles":"🍜","Chashu (pork)":"🥩","Ajitama (uovo)":"🥚",
-        "Spinaci/Bok choy":"🥬","Mais":"🌽","Bamboo shoots":"🎍","Aglio & Zenzero":"🧄"
+        "Spinaci/Bok choy":"🥬","Cipollotto (Negi)":"🧅","Bamboo shoots":"🎍","Aglio & Zenzero":"🧄"
       };
       return m[label] || '🍥';
     }
