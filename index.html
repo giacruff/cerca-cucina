@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Viaggio Culinario di Maria Luisa — La Verdura Giusta (Miso Ramen)</title>
+  <title>Un Regalo Speciale per Maria Luisa 💝</title>
   <style>
     :root{
       --bg:#0b1020; --card:#0f1730; --txt:#e9eeff; --muted:#a9b3d6;
@@ -57,6 +57,45 @@
     .avatar.happy{ transform: translateY(-6px) scale(1.05); box-shadow:0 12px 30px rgba(61,220,151,.12); }
     .avatar.sad{ transform: translateY(0) scale(.98) rotate(-2deg); box-shadow:0 6px 18px rgba(255,90,122,.08); filter:grayscale(.15); }
     .avatar .label{ display:block; font-size:12px; color:var(--muted); margin-top:6px; text-align:center }
+    
+    /* Cute Avatar Emoji animato */
+    .cute-avatar {
+      font-size: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      animation: float 3s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+    .cute-avatar.happy {
+      animation: bounce 0.6s ease;
+      transform: scale(1.1);
+    }
+    .cute-avatar.sad {
+      animation: shake 0.5s ease;
+      filter: grayscale(0.3);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.2) rotate(-5deg); }
+      50% { transform: scale(1.15) rotate(5deg); }
+      70% { transform: scale(1.1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px) rotate(-5deg); }
+      40% { transform: translateX(8px) rotate(5deg); }
+      60% { transform: translateX(-6px) rotate(-3deg); }
+      80% { transform: translateX(6px) rotate(3deg); }
+    }
+    
     .choices{display:grid; gap:10px; margin-top:12px}
     .btn{ width:100%; border:0; border-radius:12px; padding:10px 12px; font-size:15px; cursor:pointer; background:rgba(255,255,255,.03); color:var(--txt); text-align:left;
           transition:transform .06s ease, background .12s ease, box-shadow .12s ease;}
@@ -440,20 +479,20 @@
      * CONFIGURAZIONE
      **********************/
     const GAME = {
-      title: "Viaggio Culinario: il Ramen di Maria Luisa",
+      title: "Un Viaggio Culinario Speciale",
       heroineName: "Maria Luisa",
-      dishName: "Ramen al miso con verdure e carne",
+      dishName: "Ramen al miso",
       targetIngredients: ["Miso paste","Ramen noodles","Chashu (pork)","Ajitama (uovo)","Spinaci/Bok choy","Mais","Bamboo shoots","Aglio & Zenzero"],
-      // DOMANDE basate su ingredienti comuni del miso-ramen (fonti: ricette e guide miso-ramen)
+      // DOMANDE più difficili e interessanti
       questions: [
-        { q: "Quale ingrediente serve per dare un sapore umami intenso alla zuppa?", choices:["Miso paste","Zucchero","Pepe","Lemon"], correctIndex:0, ingredient:"Miso paste", hint:"È una pasta fermentata di soia." },
-        { q: "Qual è la base 'carboidrato' tipica del ramen?", choices:["Riso","Noodles (rāmen)","Pane","Pasta secca"], correctIndex:1, ingredient:"Ramen noodles", hint:"Si mangia slurpando!" },
-        { q: "Quale carne viene spesso usata come topping nel ramen giapponese?", choices:["Chashu (maiale brasato)","Pollo fritto","Manzo alla griglia","Tofu"], correctIndex:0, ingredient:"Chashu (pork)", hint:"Sottili fette di maiale tenero." },
-        { q: "Come si chiama l'uovo morbido marinato servito spesso nel ramen?", choices:["Ajitama","Uovo sodo","Omelette","Uovo alla coque"], correctIndex:0, ingredient:"Ajitama (uovo)", hint:"Morbido, con il tuorlo quasi cremoso." },
-        { q: "Quale verdura a foglia si usa spesso nei ramen per verdezza e croccantezza?", choices:["Bok choy / spinaci","Pomodoro","Cetriolo","Melanzana"], correctIndex:0, ingredient:"Spinaci/Bok choy", hint:"Scalda e dà colore." },
-        { q: "Quale topping dolce e croccante è comune nel miso ramen di stile Sapporo?", choices:["Mais","Fragole","Mela","Pistacchi"], correctIndex:0, ingredient:"Mais", hint:"Giallo e dolce, spesso in chicchi." },
-        { q: "Quale di questi è un topping croccante e fermentato che trovi nel ramen?", choices:["Bamboo shoots (menma)","Yogurt","Cioccolato","Pane"], correctIndex:0, ingredient:"Bamboo shoots", hint:"Si chiama anche 'menma'." },
-        { q: "Quali aromi freschi si usano per dare sapore al brodo del ramen?", choices:["Aglio e zenzero","Cannella e chiodi di garofano","Menta e basilico","Mela e pera"], correctIndex:0, ingredient:"Aglio & Zenzero", hint:"Profumo caldo e leggermente piccante." }
+        { q: "Nella cucina giapponese, quale ingrediente fermentato di soia dona il caratteristico sapore 'umami' profondo?", choices:["Miso","Salsa Worcestershire","Aceto balsamico","Tahini"], correctIndex:0, ingredient:"Miso paste", hint:"Si usa anche per zuppe tradizionali..." },
+        { q: "Questi noodles vengono preparati con farina di grano, acqua, sale e 'kansui' (acqua alcalina). Come si chiamano?", choices:["Udon","Soba","Ramen","Somen"], correctIndex:2, ingredient:"Ramen noodles", hint:"Condividono il nome con un piatto molto famoso!" },
+        { q: "In Giappone, come si chiama la carne di maiale brasata lentamente nella salsa di soia, spesso arrotolata?", choices:["Tonkatsu","Chashu","Gyudon","Karaage"], correctIndex:1, ingredient:"Chashu (pork)", hint:"Si scioglie in bocca..." },
+        { q: "Come viene chiamato l'uovo marinato giapponese con il tuorlo morbido e cremoso, tipico della cucina nipponica?", choices:["Onsen tamago","Tamagoyaki","Ajitama","Medama-yaki"], correctIndex:2, ingredient:"Ajitama (uovo)", hint:"'Aji' significa sapore, 'tama' significa uovo..." },
+        { q: "Quale verdura asiatica a foglia verde, dal nome che suona come 'piccolo cavolo', si usa spesso nelle zuppe orientali?", choices:["Pak choi (Bok choy)","Cavolo cappuccio","Lattuga iceberg","Radicchio"], correctIndex:0, ingredient:"Spinaci/Bok choy", hint:"Ha un gambo bianco croccante e foglie verdi." },
+        { q: "Nella variante di Sapporo, quale ingrediente giallo e dolce viene aggiunto come topping croccante?", choices:["Zucca","Peperone","Mais dolce","Ananas"], correctIndex:2, ingredient:"Mais", hint:"Cresce sulla pannocchia!" },
+        { q: "Il 'Menma' è un ingrediente fermentato e croccante molto usato in Asia. Da quale pianta proviene?", choices:["Bambù","Palma","Felce","Canna da zucchero"], correctIndex:0, ingredient:"Bamboo shoots", hint:"I panda ne vanno pazzi!" },
+        { q: "Quali due ingredienti aromatici, uno pungente e uno piccante, formano la base di molti brodi asiatici?", choices:["Cipolla e peperoncino","Aglio e zenzero","Scalogno e curcuma","Porro e wasabi"], correctIndex:1, ingredient:"Aglio & Zenzero", hint:"Uno è una radice, l'altro un bulbo..." }
       ],
       allowRetry: true,
       maxMistakes: 3
@@ -479,18 +518,17 @@
       app.innerHTML = `
         <div class="row">
           <div class="col">
-            <h1>🍜 ${GAME.title}</h1>
-            <p>Ciao <b>${GAME.heroineName}</b>! Raccogli gli ingredienti per il tuo piatto preferito: <b>${GAME.dishName}</b>.</p>
-            <p class="small">Passerai attraverso un piccolo viaggio culinario: rispondi alle domande per ottenere gli ingredienti e costruire la tua ciotola perfetta!</p>
-            <div style="display:flex; gap:10px; margin-top:12px;">
-              <button class="btn primary" onclick="startGame()">Inizia il viaggio</button>
-              <button class="btn" onclick="showHowTo()">Come si gioca</button>
+            <h1>💝 ${GAME.title}</h1>
+            <p>Ciao <b>${GAME.heroineName}</b>! 🌸</p>
+            <p>Ho preparato un piccolo gioco per te... Rispondi alle domande e scoprirai, ingrediente dopo ingrediente, quale sorpresa ti attende!</p>
+            <p class="small" style="color:var(--accent); font-style:italic;">Ogni risposta giusta ti avvicina alla rivelazione finale... ✨</p>
+            <div style="display:flex; gap:10px; margin-top:16px;">
+              <button class="btn primary" onclick="startGame()">🌟 Inizia l'avventura</button>
             </div>
-            <div id="howto" class="small" style="margin-top:12px;color:var(--muted)"></div>
           </div>
-          <div class="col">
-            <div id="startAvatar">${createAvatarSVG('neutral')}</div>
-            <p class="small" style="margin-top:8px;">Vedrai la tua espressione cambiare quando avanzi!</p>
+          <div class="col" style="text-align:center;">
+            <div class="cute-avatar" id="startAvatar">👩🏻‍🍳</div>
+            <p class="small" style="margin-top:12px; color:var(--muted);">Pronta a scoprire cosa ti aspetta?</p>
           </div>
         </div>
       `;
@@ -535,7 +573,7 @@
         <div class="question">
           <div style="display:flex; align-items:center; gap:12px;">
             <div>
-              <div id="heroAvatar">${createAvatarSVG('neutral')}</div>
+              <div class="cute-avatar" id="heroAvatar">👩🏻‍🍳</div>
               <div class="avatar-label" style="text-align:center; font-size:13px; color:var(--muted)">${GAME.heroineName}</div>
             </div>
             <div style="flex:1">
@@ -564,21 +602,30 @@
 
     function renderWin(){
       app.innerHTML = `
-        <div style="text-align:center">
-          <h1>🎉 Complimenti ${GAME.heroineName} — ciotola completa!</h1>
-          <p>Hai raccolto tutti gli ingredienti per il tuo ${GAME.dishName}. Buon appetito!</p>
-          <div style="display:flex; gap:14px; justify-content:center; margin-top:12px;">
-            <div style="width:140px; height:140px;">${createAvatarSVG('happy')}</div>
-            <div style="min-width:220px">
-              <div class="bowl" style="margin:0 auto; width:320px; height:200px;">
-                <div style="display:flex; gap:6px; justify-content:center; align-items:flex-end; padding-bottom:16px; flex-wrap:wrap">
-                  ${GAME.targetIngredients.map(it => `<div class="ingredient-pill">${emojiFor(it)} ${shortLabel(it)}</div>`).join('')}
-                </div>
-              </div>
+        <div style="text-align:center; padding:20px;">
+          <h1>🎉🌸 Bravissima ${GAME.heroineName}! 🌸🎉</h1>
+          <p style="font-size:18px; margin:16px 0;">Hai scoperto tutti gli ingredienti...</p>
+          
+          <div style="background: linear-gradient(135deg, rgba(255,184,107,0.15), rgba(255,150,180,0.1)); border-radius:20px; padding:24px; margin:20px auto; max-width:500px; border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:48px; margin-bottom:12px;">🍜</div>
+            <h2 style="color:var(--accent); margin:0 0 8px;">Il piatto misterioso era...</h2>
+            <h1 style="font-size:28px; color:var(--txt); margin:0;">${GAME.dishName}!</h1>
+          </div>
+          
+          <div class="bowl" style="margin:20px auto; width:320px; height:200px;">
+            <div style="display:flex; gap:6px; justify-content:center; align-items:flex-end; padding-bottom:16px; flex-wrap:wrap">
+              ${GAME.targetIngredients.map(it => `<div class="ingredient-pill">${emojiFor(it)} ${shortLabel(it)}</div>`).join('')}
             </div>
           </div>
-          <div style="margin-top:14px">
-            <button class="btn primary" onclick="restart()">Gioca di nuovo</button>
+          
+          <div style="background: linear-gradient(135deg, rgba(61,220,151,0.1), rgba(255,184,107,0.1)); border-radius:16px; padding:20px; margin:24px auto; max-width:450px; border:1px solid rgba(255,255,255,0.08);">
+            <p style="font-size:16px; color:var(--txt); margin:0 0 8px;">💌 E ora... la vera sorpresa:</p>
+            <p style="font-size:20px; color:var(--accent); margin:0; font-weight:600;">Ti va di venire a mangiarlo insieme a me? 🥰</p>
+            <p style="font-size:14px; color:var(--muted); margin-top:12px;">— Con affetto ❤️</p>
+          </div>
+          
+          <div style="margin-top:20px;">
+            <button class="btn" onclick="restart()" style="opacity:0.6">🔄 Rigioca</button>
           </div>
         </div>
       `;
@@ -586,11 +633,13 @@
 
     function renderLose(){
       app.innerHTML = `
-        <div style="text-align:center">
-          <h1>😢 Oh no — troppi errori</h1>
-          <p>Non ti scoraggiare ${GAME.heroineName}, puoi riprovare e completare la ciotola!</p>
-          <div style="margin-top:12px">
-            <button class="btn primary" onclick="restart()">Riprova</button>
+        <div style="text-align:center; padding:20px;">
+          <div style="font-size:64px; margin-bottom:16px;">🥺</div>
+          <h1>Oh no!</h1>
+          <p style="font-size:16px;">Niente paura ${GAME.heroineName}, la sorpresa ti aspetta ancora! 💕</p>
+          <p style="color:var(--muted);">Riprova e scoprirai cosa ho preparato per te...</p>
+          <div style="margin-top:20px">
+            <button class="btn primary" onclick="restart()">✨ Riprova</button>
           </div>
         </div>
       `;
@@ -820,16 +869,19 @@
     }
 
     function setAvatarExpression(expr){
-      // Aggiorna l'avatar SVG
+      // Aggiorna l'avatar emoji con animazione
       const el = document.getElementById('heroAvatar');
       if(el) {
-        el.innerHTML = createAvatarSVG(expr);
-      }
-      
-      // Aggiorna anche l'avatar della start screen se presente
-      const startAv = document.getElementById('startAvatar');
-      if(startAv){
-        startAv.innerHTML = createAvatarSVG(expr);
+        el.classList.remove('happy', 'sad');
+        if(expr === 'happy') {
+          el.textContent = '😊';
+          el.classList.add('happy');
+        } else if(expr === 'sad') {
+          el.textContent = '😞';
+          el.classList.add('sad');
+        } else {
+          el.textContent = '👩🏻‍🍳';
+        }
       }
       
       // Attiva animazione della ciotola se risposta corretta
@@ -840,7 +892,10 @@
       // torna neutro dopo un po'
       clearTimeout(window._exprTO);
       window._exprTO = setTimeout(()=>{ 
-        if(el) el.innerHTML = createAvatarSVG('neutral');
+        if(el) {
+          el.textContent = '👩🏻‍🍳';
+          el.classList.remove('happy', 'sad');
+        }
       }, 2000);
       
       // aggiorna bowl grafica
