@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Verdura Giusta</title>
+  <style>
+    :root { --bg:#0b1020; --card:#121a33; --txt:#e9eeff; --muted:#a9b3d6; --ok:#3ddc97; --bad:#ff5a7a; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: radial-gradient(1200px 800px at 30% 10%, #1a2a6c55, transparent), var(--bg); color:var(--txt); }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 20px; }
+    .card { background: rgba(18,26,51,.92); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    p { color: var(--muted); margin: 0 0 14px; line-height: 1.4; }
+    .row { display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; }
+    .col { flex: 1 1 260px; }
+    .avatar {
+      border-radius: 16px; padding: 16px; background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center; min-height: 180px;
+      font-size: 68px;
+    }
+    .badge { display:inline-flex; gap:8px; align-items:center; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+    .btn { width:100%; border:0; border-radius: 14px; padding: 12px 14px; font-size: 16px; cursor:pointer; background: rgba(255,255,255,.08); color: var(--txt); transition: transform .06s ease, background .2s ease; text-align:left;}
+    .btn:hover { background: rgba(255,255,255,.12); }
+    .btn:active { transform: scale(.99); }
+    .btn.primary { background: rgba(61,220,151,.18); border: 1px solid rgba(61,220,151,.35); }
+    .btn.primary:hover { background: rgba(61,220,151,.26); }
+    .msg { margin-top: 10px; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.06); }
+    .msg.ok { border-color: rgba(61,220,151,.35); }
+    .msg.bad { border-color: rgba(255,90,122,.35); }
+    .progress { height: 10px; background: rgba(255,255,255,.08); border-radius: 999px; overflow:hidden; border: 1px solid rgba(255,255,255,.08); }
+    .bar { height: 100%; width: 0%; background: rgba(61,220,151,.75); transition: width .35s ease; }
+    .small { font-size: 13px; color: var(--muted); }
+    .footer { margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="app">
+      <!-- contenuto via JS -->
+    </div>
+  </div>
+
+  <script>
+    /**********************
+     * CONFIGURAZIONE: QUI CAMBI LE DOMANDE
+     **********************/
+    const GAME = {
+      title: "La Verdura Giusta",
+      heroineName: "Mara", // nome della ragazza (puoi cambiare)
+      dishName: "Ramen speciale", // piatto preferito (puoi cambiare)
+      // verdura "giusta" (è il premio narrativo; non deve essere una domanda a parte)
+      targetVegetable: "pak choi",
+      // Domande: puoi aggiungerne quante vuoi
+      questions: [
+        {
+          q: "Quale di queste è una verdura a foglia?",
+          choices: ["Mela", "Lattuga", "Pane", "Cioccolato"],
+          correctIndex: 1,
+          hint: "Pensa alle insalate!"
+        },
+        {
+          q: "Qual è un ortaggio che cresce sottoterra?",
+          choices: ["Carota", "Fragola", "Basilico", "Uva"],
+          correctIndex: 0,
+          hint: "È arancione e croccante."
+        },
+        {
+          q: "Quale tra queste è una verdura tipica dei wok asiatici?",
+          choices: ["Pak choi", "Ananas", "Biscotto", "Cappuccino"],
+          correctIndex: 0,
+          hint: "È verde, con coste chiare."
+        }
+      ],
+      // regole
+      allowRetry: true,      // se falso: un errore fa perdere e si ricomincia
+      maxMistakes: 3         // se allowRetry true, dopo N errori si perde
+    };
+
+    /**********************
+     * LOGICA DI GIOCO
+     **********************/
+    let state = { screen: "start", idx: 0, mistakes: 0 };
+
+    const app = document.getElementById("app");
+
+    function render() {
+      if (state.screen === "start") return renderStart();
+      if (state.screen === "question") return renderQuestion();
+      if (state.screen === "win") return renderWin();
+      if (state.screen === "lose") return renderLose();
+    }
+
+    function progressPct() {
+      const total = GAME.questions.length;
+      return Math.round((state.idx / total) * 100);
+    }
+
+    function renderStart() {
+      app.innerHTML = `
+        <div class="row">
+          <div class="col">
+            <h1>🍳 ${GAME.title}</h1>
+            <p>
+              Aiuta <b>${GAME.heroineName}</b> (ragazza mora con la frangetta) a cucinare il suo piatto preferito:
+              <b>${GAME.dishName}</b>. <br/>
+              Per riuscirci deve trovare la verdura giusta: <b>???</b>.<br/>
+              Rispondi alle domande per scoprire l’ingrediente!
+            </p>
+            <div class="badge">🧩 Domande: <b>${GAME.questions.length}</b>&nbsp;·&nbsp;❤️ Errori max: <b>${GAME.maxMistakes}</b></div>
+            <div class="footer">
+              <button class="btn primary" onclick="startGame()">Inizia</button>
+              <button class="btn" onclick="showHowTo()">Come si gioca</button>
+            </div>
+            <div id="extra" class="small" style="margin-top:10px;"></div>
+          </div>
+          <div class="col">
+            <div class="avatar" aria-label="personaggio">👩🏻‍🍳</div>
+            <p class="small" style="margin-top:10px;">
+              (Puoi sostituire l’emoji con un’illustrazione più avanti.)
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderQuestion(messageHtml = "") {
+      const total = GAME.questions.length;
+      const q = GAME.questions[state.idx];
+      const pct = Math.min(100, progressPct());
+      app.innerHTML = `
+        <div class="row">
+          <div class="col">
+            <h1>Domanda ${state.idx + 1} / ${total}</h1>
+            <p>${q.q}</p>
+
+            <div class="progress" title="Progresso"><div class="bar" style="width:${pct}%"></div></div>
+            <p class="small" style="margin-top:8px;">Progresso: ${pct}% · Errori: ${state.mistakes}/${GAME.maxMistakes}</p>
+
+            <div id="choices" style="display:grid; gap:10px; margin-top:12px;"></div>
+            ${messageHtml ? `<div style="margin-top:12px;">${messageHtml}</div>` : ""}
+            <div class="footer">
+              <button class="btn" onclick="restart()">Ricomincia</button>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="avatar">👩🏻‍🍳</div>
+            <p class="small" style="margin-top:10px;">
+              Suggerimento disponibile: <b>${q.hint ? "sì" : "no"}</b>
+            </p>
+            ${q.hint ? `<button class="btn" onclick="showHint()">💡 Mostra suggerimento</button>` : ""}
+          </div>
+        </div>
+      `;
+
+      const choices = document.getElementById("choices");
+      q.choices.forEach((text, i) => {
+        const b = document.createElement("button");
+        b.className = "btn";
+        b.textContent = "• " + text;
+        b.onclick = () => answer(i);
+        choices.appendChild(b);
+      });
+    }
+
+    function renderWin() {
+      app.innerHTML = `
+        <h1>🎉 Verdura trovata!</h1>
+        <p>
+          Bravə! Hai aiutato ${GAME.heroineName} a trovare la verdura giusta: <b>${GAME.targetVegetable}</b>.<br/>
+          Ora può cucinare il suo piatto preferito: <b>${GAME.dishName}</b>!
+        </p>
+        <div class="row">
+          <div class="col"><div class="avatar">🥬</div></div>
+          <div class="col"><div class="avatar">🍜</div></div>
+        </div>
+        <div class="footer">
+          <button class="btn primary" onclick="restart()">Gioca di nuovo</button>
+        </div>
+      `;
+    }
+
+    function renderLose() {
+      app.innerHTML = `
+        <h1>😵 Oh no!</h1>
+        <p>
+          Troppi errori. ${GAME.heroineName} ha bruciato la pentola 😅<br/>
+          Vuoi riprovare a trovare la verdura giusta?
+        </p>
+        <div class="footer">
+          <button class="btn primary" onclick="restart()">Riprova</button>
+        </div>
+      `;
+    }
+
+    // Azioni
+    window.startGame = function () {
+      state = { screen: "question", idx: 0, mistakes: 0 };
+      render();
+    };
+
+    window.restart = function () {
+      state = { screen: "start", idx: 0, mistakes: 0 };
+      render();
+    };
+
+    window.showHowTo = function () {
+      const el = document.getElementById("extra");
+      el.innerHTML = "Rispondi alle domande. Se sbagli, aumentano gli errori. Se completi tutte le domande, trovi la verdura e vinci.";
+    };
+
+    window.showHint = function () {
+      const q = GAME.questions[state.idx];
+      renderQuestion(`<div class="msg">💡 <b>Suggerimento:</b> ${q.hint}</div>`);
+    };
+
+    function answer(choiceIndex) {
+      const q = GAME.questions[state.idx];
+      const correct = choiceIndex === q.correctIndex;
+
+      if (correct) {
+        state.idx += 1;
+        if (state.idx >= GAME.questions.length) {
+          state.screen = "win";
+          return render();
+        }
+        return renderQuestion(`<div class="msg ok">✅ Esatto! Avanti…</div>`);
+      } else {
+        state.mistakes += 1;
+
+        if (!GAME.allowRetry) {
+          state.screen = "lose";
+          return render();
+        }
+
+        if (state.mistakes >= GAME.maxMistakes) {
+          state.screen = "lose";
+          return render();
+        }
+
+        return renderQuestion(`<div class="msg bad">❌ Non proprio. Riprova! (Errori: ${state.mistakes}/${GAME.maxMistakes})</div>`);
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
