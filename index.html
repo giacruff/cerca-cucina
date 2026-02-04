@@ -3,245 +3,911 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>La Verdura Giusta</title>
+  <title>Viaggio Culinario di Maria Luisa — La Verdura Giusta (Miso Ramen)</title>
   <style>
-    :root { --bg:#0b1020; --card:#121a33; --txt:#e9eeff; --muted:#a9b3d6; --ok:#3ddc97; --bad:#ff5a7a; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: radial-gradient(1200px 800px at 30% 10%, #1a2a6c55, transparent), var(--bg); color:var(--txt); }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 20px; }
-    .card { background: rgba(18,26,51,.92); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
-    h1 { font-size: 22px; margin: 0 0 8px; }
-    p { color: var(--muted); margin: 0 0 14px; line-height: 1.4; }
-    .row { display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; }
-    .col { flex: 1 1 260px; }
-    .avatar {
-      border-radius: 16px; padding: 16px; background: rgba(255,255,255,.06);
-      display:flex; align-items:center; justify-content:center; min-height: 180px;
-      font-size: 68px;
+    :root{
+      --bg:#0b1020; --card:#0f1730; --txt:#e9eeff; --muted:#a9b3d6;
+      --accent:#ffb86b; --ok:#3ddc97; --bad:#ff5a7a;
     }
-    .badge { display:inline-flex; gap:8px; align-items:center; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
-    .btn { width:100%; border:0; border-radius: 14px; padding: 12px 14px; font-size: 16px; cursor:pointer; background: rgba(255,255,255,.08); color: var(--txt); transition: transform .06s ease, background .2s ease; text-align:left;}
-    .btn:hover { background: rgba(255,255,255,.12); }
-    .btn:active { transform: scale(.99); }
-    .btn.primary { background: rgba(61,220,151,.18); border: 1px solid rgba(61,220,151,.35); }
-    .btn.primary:hover { background: rgba(61,220,151,.26); }
-    .msg { margin-top: 10px; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.06); }
-    .msg.ok { border-color: rgba(61,220,151,.35); }
-    .msg.bad { border-color: rgba(255,90,122,.35); }
-    .progress { height: 10px; background: rgba(255,255,255,.08); border-radius: 999px; overflow:hidden; border: 1px solid rgba(255,255,255,.08); }
-    .bar { height: 100%; width: 0%; background: rgba(61,220,151,.75); transition: width .35s ease; }
-    .small { font-size: 13px; color: var(--muted); }
-    .footer { margin-top: 14px; display:flex; gap:10px; flex-wrap:wrap; }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(1200px 800px at 30% 10%, #1a2a6c55, transparent), var(--bg);
+      color:var(--txt); -webkit-font-smoothing:antialiased;
+    }
+    .wrap{max-width:1100px; margin:24px auto; padding:18px;}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:18px; box-shadow:0 10px 40px rgba(0,0,0,.45);}
+    h1{margin:0 0 6px; font-size:20px}
+    p{margin:0 0 10px; color:var(--muted); line-height:1.4}
+    .row{display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap}
+    .col{flex:1 1 300px; min-width:260px}
+    /* Left: percorso visivo */
+    .kitchen{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,.04);
+      min-height:360px; display:flex; flex-direction:column; gap:12px;
+    }
+    .path{display:flex; gap:10px; align-items:center; overflow-x:auto; padding-bottom:6px}
+    .step{
+      min-width:110px; padding:12px; border-radius:12px; background:rgba(255,255,255,0.02);
+      text-align:center; border:1px solid rgba(255,255,255,.04); transition:transform .2s ease;
+    }
+    .step.active{ box-shadow: 0 6px 18px rgba(0,0,0,.5); transform:translateY(-6px); border-color: rgba(255,255,255,.08); }
+    .ingredient-icon{ font-size:36px; display:block; margin-bottom:8px }
+    .bowl-area{flex:1; display:flex; align-items:center; justify-content:center; position:relative}
+    .bowl{
+      width:320px; height:200px; border-radius:999px 999px 100px 100px / 100px; background:linear-gradient(180deg,#ffcda3,#ffb86b);
+      position:relative; box-shadow: inset 0 -12px 30px rgba(0,0,0,.15);
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:20px; overflow:visible;
+    }
+    .bowl .contents{ width:90%; display:flex; gap:8px; justify-content:center; align-items:flex-end; flex-wrap:wrap }
+    .ingredient-pill{ background:rgba(255,255,255,.06); padding:6px 8px; border-radius:999px; font-size:14px; }
+    /* Right: domande */
+    .question{
+      padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      border:1px solid rgba(255,255,255,.04);
+    }
+    .avatar{
+      width:120px; height:120px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+      font-size:56px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.04);
+      transition: transform .25s ease, box-shadow .25s ease;
+      margin:0 auto 8px;
+    }
+    .avatar.happy{ transform: translateY(-6px) scale(1.05); box-shadow:0 12px 30px rgba(61,220,151,.12); }
+    .avatar.sad{ transform: translateY(0) scale(.98) rotate(-2deg); box-shadow:0 6px 18px rgba(255,90,122,.08); filter:grayscale(.15); }
+    .avatar .label{ display:block; font-size:12px; color:var(--muted); margin-top:6px; text-align:center }
+    .choices{display:grid; gap:10px; margin-top:12px}
+    .btn{ width:100%; border:0; border-radius:12px; padding:10px 12px; font-size:15px; cursor:pointer; background:rgba(255,255,255,.03); color:var(--txt); text-align:left;
+          transition:transform .06s ease, background .12s ease, box-shadow .12s ease;}
+    .btn:hover{ background: rgba(255,255,255,.06); }
+    .btn.primary{ background: linear-gradient(90deg, rgba(61,220,151,.16), rgba(255,200,100,.06)); border:1px solid rgba(255,255,255,.06); }
+    .msg{ margin-top:12px; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02) }
+    .msg.ok{ border-color: rgba(61,220,151,.2); }
+    .msg.bad{ border-color: rgba(255,90,122,.18); }
+    .progress{ height:10px; background:rgba(255,255,255,.03); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.04); }
+    .bar{ height:100%; width:0%; background:linear-gradient(90deg,var(--ok), #7be2c1); transition:width .4s ease; }
+    
+    /* Controlli audio */
+    .audio-controls { position:fixed; top:16px; right:16px; display:flex; gap:8px; z-index:100; }
+    .audio-btn { width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,0.1); 
+                 background:rgba(15,23,48,0.9); color:var(--txt); font-size:18px; cursor:pointer;
+                 display:flex; align-items:center; justify-content:center; transition:all 0.2s ease;
+                 backdrop-filter: blur(10px); }
+    .audio-btn:hover { background:rgba(255,255,255,0.1); transform:scale(1.1); }
+    .audio-btn.muted { opacity:0.5; }
+    .audio-btn.playing { animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(61,220,151,0.4)} 50%{box-shadow:0 0 0 8px rgba(61,220,151,0)} }
+    
+    /* confetti semplice */
+    .confetti{ position:absolute; left:0; right:0; top:0; bottom:0; pointer-events:none; overflow:hidden; }
+    .confetti i{ position:absolute; width:10px; height:14px; background:var(--accent); opacity:0.95; transform:translateY(-10px); animation:fall 900ms linear forwards; border-radius:2px;}
+    @keyframes fall { to { transform: translateY(260px) rotate(360deg); opacity:0; } }
+    
+    /* Avatar SVG animato */
+    .avatar-svg { width:120px; height:120px; }
+    .avatar-svg .eye { animation: blink 4s infinite; transform-origin: center; }
+    .avatar-svg .pupil { animation: lookAround 6s infinite ease-in-out; }
+    .avatar-svg .mouth { transition: d 0.3s ease; }
+    .avatar-svg.talking .mouth { animation: talk 0.3s infinite; }
+    .avatar-svg.happy .mouth { animation: none; }
+    .avatar-svg.sad .mouth { animation: none; }
+    .avatar-svg .eyebrow { transition: transform 0.3s ease; transform-origin: center; }
+    .avatar-svg.sad .eyebrow-left { transform: rotate(15deg) translateY(2px); }
+    .avatar-svg.sad .eyebrow-right { transform: rotate(-15deg) translateY(2px); }
+    .avatar-svg.happy .eyebrow-left { transform: rotate(-10deg) translateY(-2px); }
+    .avatar-svg.happy .eyebrow-right { transform: rotate(10deg) translateY(-2px); }
+    @keyframes blink { 0%,96%,100%{transform:scaleY(1)} 98%{transform:scaleY(0.1)} }
+    @keyframes lookAround { 0%,100%{transform:translateX(0)} 25%{transform:translateX(2px)} 75%{transform:translateX(-2px)} }
+    @keyframes talk { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.6)} }
+    
+    /* Ciotola che bolle */
+    .bowl { position:relative; }
+    .bowl.boiling::before { 
+      content:''; position:absolute; top:-20px; left:50%; transform:translateX(-50%);
+      width:80%; height:40px; background: radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%);
+      animation: steam 2s infinite ease-out; opacity:0;
+    }
+    .bowl.boiling .bubble { position:absolute; background:rgba(255,200,100,0.6); border-radius:50%; animation: bubble 1.5s infinite ease-out; }
+    @keyframes steam { 0%{opacity:0;transform:translateX(-50%) translateY(0)} 50%{opacity:0.6} 100%{opacity:0;transform:translateX(-50%) translateY(-30px)} }
+    @keyframes bubble { 0%{transform:translateY(0) scale(1);opacity:0.8} 100%{transform:translateY(-40px) scale(0.3);opacity:0} }
+    @keyframes bowlShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-3px) rotate(-1deg)} 75%{transform:translateX(3px) rotate(1deg)} }
+    .bowl.adding { animation: bowlShake 0.4s ease-in-out; }
+    
+    /* Percorso SVG */
+    .path-svg { width:100%; height:80px; margin-bottom:10px; }
+    .path-line { stroke: rgba(255,255,255,0.1); stroke-width:3; fill:none; stroke-dasharray: 8 4; }
+    .path-line-progress { stroke: var(--ok); stroke-width:3; fill:none; stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 0.8s ease-out; }
+    .path-node { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.1); stroke-width:2; transition: all 0.4s ease; cursor:pointer; }
+    .path-node.active { fill: rgba(61,220,151,0.2); stroke: var(--ok); animation: nodeGlow 1.5s ease-in-out; }
+    .path-node:hover { transform: scale(1.1); }
+    @keyframes nodeGlow { 0%{filter:drop-shadow(0 0 0 transparent)} 50%{filter:drop-shadow(0 0 15px rgba(61,220,151,0.6))} 100%{filter:drop-shadow(0 0 0 transparent)} }
+    .path-icon { font-size:20px; transition: transform 0.3s ease; }
+    .path-node.active .path-icon { animation: iconPop 0.5s ease-out; }
+    @keyframes iconPop { 0%{transform:scale(0)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
+    
+    /* responsive */
+    @media (max-width:900px){
+      .row{flex-direction:column}
+      .avatar{ margin-bottom:6px }
+      .bowl{ width:260px; height:160px }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card" id="app">
-      <!-- contenuto via JS -->
+      <!-- render via JS -->
     </div>
   </div>
 
   <script>
     /**********************
-     * CONFIGURAZIONE: QUI CAMBI LE DOMANDE
+     * SISTEMA AUDIO
+     **********************/
+    const AudioSystem = {
+      ctx: null,
+      musicGain: null,
+      sfxGain: null,
+      musicMuted: false,
+      sfxMuted: false,
+      musicPlaying: false,
+      musicOsc: null,
+      
+      init() {
+        if (this.ctx) return;
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Gain nodes per controllo volume
+        this.musicGain = this.ctx.createGain();
+        this.musicGain.gain.value = 0.15;
+        this.musicGain.connect(this.ctx.destination);
+        
+        this.sfxGain = this.ctx.createGain();
+        this.sfxGain.gain.value = 0.4;
+        this.sfxGain.connect(this.ctx.destination);
+      },
+      
+      resume() {
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      },
+      
+      // Effetto sonoro risposta corretta (melodia allegra)
+      playCorrect() {
+        if (this.sfxMuted) return;
+        this.init();
+        this.resume();
+        
+        const now = this.ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        
+        notes.forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          
+          gain.gain.setValueAtTime(0, now + i * 0.1);
+          gain.gain.linearRampToValueAtTime(0.3, now + i * 0.1 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.3);
+          
+          osc.connect(gain);
+          gain.connect(this.sfxGain);
+          
+          osc.start(now + i * 0.1);
+          osc.stop(now + i * 0.1 + 0.35);
+        });
+        
+        // Vibrazione leggera su mobile
+        this.vibrate([50, 30, 50]);
+      },
+      
+      // Effetto sonoro risposta sbagliata (suono triste)
+      playWrong() {
+        if (this.sfxMuted) return;
+        this.init();
+        this.resume();
+        
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.3);
+        
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+        
+        osc.start(now);
+        osc.stop(now + 0.5);
+        
+        // Vibrazione forte su mobile
+        this.vibrate([100, 50, 100, 50, 100]);
+      },
+      
+      // Suono click bottone
+      playClick() {
+        if (this.sfxMuted) return;
+        this.init();
+        this.resume();
+        
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.value = 800;
+        
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+        
+        osc.start(now);
+        osc.stop(now + 0.1);
+        
+        this.vibrate(10);
+      },
+      
+      // Fanfara vittoria
+      playVictory() {
+        if (this.sfxMuted) return;
+        this.init();
+        this.resume();
+        
+        const now = this.ctx.currentTime;
+        const melody = [
+          { freq: 523.25, time: 0, dur: 0.15 },
+          { freq: 659.25, time: 0.15, dur: 0.15 },
+          { freq: 783.99, time: 0.3, dur: 0.15 },
+          { freq: 1046.50, time: 0.45, dur: 0.4 },
+          { freq: 783.99, time: 0.9, dur: 0.15 },
+          { freq: 1046.50, time: 1.05, dur: 0.5 }
+        ];
+        
+        melody.forEach(note => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          
+          osc.type = 'triangle';
+          osc.frequency.value = note.freq;
+          
+          gain.gain.setValueAtTime(0, now + note.time);
+          gain.gain.linearRampToValueAtTime(0.3, now + note.time + 0.02);
+          gain.gain.setValueAtTime(0.25, now + note.time + note.dur - 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.dur);
+          
+          osc.connect(gain);
+          gain.connect(this.sfxGain);
+          
+          osc.start(now + note.time);
+          osc.stop(now + note.time + note.dur + 0.1);
+        });
+        
+        this.vibrate([100, 50, 100, 50, 200]);
+      },
+      
+      // Suono game over
+      playGameOver() {
+        if (this.sfxMuted) return;
+        this.init();
+        this.resume();
+        
+        const now = this.ctx.currentTime;
+        const notes = [392, 349.23, 329.63, 261.63]; // G4, F4, E4, C4
+        
+        notes.forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          
+          gain.gain.setValueAtTime(0, now + i * 0.25);
+          gain.gain.linearRampToValueAtTime(0.2, now + i * 0.25 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.25 + 0.4);
+          
+          osc.connect(gain);
+          gain.connect(this.sfxGain);
+          
+          osc.start(now + i * 0.25);
+          osc.stop(now + i * 0.25 + 0.5);
+        });
+        
+        this.vibrate([200, 100, 300]);
+      },
+      
+      // Musica di sottofondo (loop melodico giapponese-style)
+      startMusic() {
+        if (this.musicMuted || this.musicPlaying) return;
+        this.init();
+        this.resume();
+        this.musicPlaying = true;
+        
+        const playLoop = () => {
+          if (!this.musicPlaying || this.musicMuted) return;
+          
+          const now = this.ctx.currentTime;
+          // Scala pentatonica giapponese
+          const scale = [261.63, 293.66, 349.23, 392, 466.16, 523.25, 587.33]; // C, D, F, G, Bb, C5, D5
+          const pattern = [0, 2, 3, 4, 3, 2, 0, 2, 4, 5, 4, 3, 2, 0];
+          const noteDuration = 0.5;
+          
+          pattern.forEach((noteIdx, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            const filter = this.ctx.createBiquadFilter();
+            
+            filter.type = 'lowpass';
+            filter.frequency.value = 800;
+            
+            osc.type = 'sine';
+            osc.frequency.value = scale[noteIdx];
+            
+            const startTime = now + i * noteDuration;
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime(0.15, startTime + 0.05);
+            gain.gain.setValueAtTime(0.12, startTime + noteDuration - 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + noteDuration);
+            
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(this.musicGain);
+            
+            osc.start(startTime);
+            osc.stop(startTime + noteDuration + 0.1);
+          });
+          
+          // Loop dopo che il pattern finisce
+          setTimeout(() => {
+            if (this.musicPlaying && !this.musicMuted) playLoop();
+          }, pattern.length * noteDuration * 1000);
+        };
+        
+        playLoop();
+        this.updateMusicButton();
+      },
+      
+      stopMusic() {
+        this.musicPlaying = false;
+        this.updateMusicButton();
+      },
+      
+      toggleMusic() {
+        this.musicMuted = !this.musicMuted;
+        if (this.musicMuted) {
+          this.stopMusic();
+        } else {
+          this.startMusic();
+        }
+        this.updateMusicButton();
+      },
+      
+      toggleSfx() {
+        this.sfxMuted = !this.sfxMuted;
+        if (!this.sfxMuted) this.playClick();
+        this.updateSfxButton();
+      },
+      
+      updateMusicButton() {
+        const btn = document.getElementById('musicBtn');
+        if (btn) {
+          btn.textContent = this.musicMuted ? '🔇' : '🎵';
+          btn.classList.toggle('muted', this.musicMuted);
+          btn.classList.toggle('playing', this.musicPlaying && !this.musicMuted);
+        }
+      },
+      
+      updateSfxButton() {
+        const btn = document.getElementById('sfxBtn');
+        if (btn) {
+          btn.textContent = this.sfxMuted ? '🔕' : '🔔';
+          btn.classList.toggle('muted', this.sfxMuted);
+        }
+      },
+      
+      // Vibrazione tattile per mobile
+      vibrate(pattern) {
+        if ('vibrate' in navigator) {
+          navigator.vibrate(pattern);
+        }
+      }
+    };
+    
+    // Crea i controlli audio
+    function createAudioControls() {
+      const existing = document.querySelector('.audio-controls');
+      if (existing) return;
+      
+      const controls = document.createElement('div');
+      controls.className = 'audio-controls';
+      controls.innerHTML = `
+        <button id="musicBtn" class="audio-btn muted" onclick="AudioSystem.toggleMusic()" title="Musica">🔇</button>
+        <button id="sfxBtn" class="audio-btn" onclick="AudioSystem.toggleSfx()" title="Effetti sonori">🔔</button>
+      `;
+      document.body.appendChild(controls);
+    }
+
+    /**********************
+     * CONFIGURAZIONE
      **********************/
     const GAME = {
-      title: "La Verdura Giusta",
-      heroineName: "Mara", // nome della ragazza (puoi cambiare)
-      dishName: "Ramen speciale", // piatto preferito (puoi cambiare)
-      // verdura "giusta" (è il premio narrativo; non deve essere una domanda a parte)
-      targetVegetable: "pak choi",
-      // Domande: puoi aggiungerne quante vuoi
+      title: "Viaggio Culinario: il Ramen di Maria Luisa",
+      heroineName: "Maria Luisa",
+      dishName: "Ramen al miso con verdure e carne",
+      targetIngredients: ["Miso paste","Ramen noodles","Chashu (pork)","Ajitama (uovo)","Spinaci/Bok choy","Mais","Bamboo shoots","Aglio & Zenzero"],
+      // DOMANDE basate su ingredienti comuni del miso-ramen (fonti: ricette e guide miso-ramen)
       questions: [
-        {
-          q: "Quale di queste è una verdura a foglia?",
-          choices: ["Mela", "Lattuga", "Pane", "Cioccolato"],
-          correctIndex: 1,
-          hint: "Pensa alle insalate!"
-        },
-        {
-          q: "Qual è un ortaggio che cresce sottoterra?",
-          choices: ["Carota", "Fragola", "Basilico", "Uva"],
-          correctIndex: 0,
-          hint: "È arancione e croccante."
-        },
-        {
-          q: "Quale tra queste è una verdura tipica dei wok asiatici?",
-          choices: ["Pak choi", "Ananas", "Biscotto", "Cappuccino"],
-          correctIndex: 0,
-          hint: "È verde, con coste chiare."
-        }
+        { q: "Quale ingrediente serve per dare un sapore umami intenso alla zuppa?", choices:["Miso paste","Zucchero","Pepe","Lemon"], correctIndex:0, ingredient:"Miso paste", hint:"È una pasta fermentata di soia." },
+        { q: "Qual è la base 'carboidrato' tipica del ramen?", choices:["Riso","Noodles (rāmen)","Pane","Pasta secca"], correctIndex:1, ingredient:"Ramen noodles", hint:"Si mangia slurpando!" },
+        { q: "Quale carne viene spesso usata come topping nel ramen giapponese?", choices:["Chashu (maiale brasato)","Pollo fritto","Manzo alla griglia","Tofu"], correctIndex:0, ingredient:"Chashu (pork)", hint:"Sottili fette di maiale tenero." },
+        { q: "Come si chiama l'uovo morbido marinato servito spesso nel ramen?", choices:["Ajitama","Uovo sodo","Omelette","Uovo alla coque"], correctIndex:0, ingredient:"Ajitama (uovo)", hint:"Morbido, con il tuorlo quasi cremoso." },
+        { q: "Quale verdura a foglia si usa spesso nei ramen per verdezza e croccantezza?", choices:["Bok choy / spinaci","Pomodoro","Cetriolo","Melanzana"], correctIndex:0, ingredient:"Spinaci/Bok choy", hint:"Scalda e dà colore." },
+        { q: "Quale topping dolce e croccante è comune nel miso ramen di stile Sapporo?", choices:["Mais","Fragole","Mela","Pistacchi"], correctIndex:0, ingredient:"Mais", hint:"Giallo e dolce, spesso in chicchi." },
+        { q: "Quale di questi è un topping croccante e fermentato che trovi nel ramen?", choices:["Bamboo shoots (menma)","Yogurt","Cioccolato","Pane"], correctIndex:0, ingredient:"Bamboo shoots", hint:"Si chiama anche 'menma'." },
+        { q: "Quali aromi freschi si usano per dare sapore al brodo del ramen?", choices:["Aglio e zenzero","Cannella e chiodi di garofano","Menta e basilico","Mela e pera"], correctIndex:0, ingredient:"Aglio & Zenzero", hint:"Profumo caldo e leggermente piccante." }
       ],
-      // regole
-      allowRetry: true,      // se falso: un errore fa perdere e si ricomincia
-      maxMistakes: 3         // se allowRetry true, dopo N errori si perde
+      allowRetry: true,
+      maxMistakes: 3
     };
 
     /**********************
-     * LOGICA DI GIOCO
+     * STATO
      **********************/
-    let state = { screen: "start", idx: 0, mistakes: 0 };
-
+    let state = { screen: "start", idx: 0, mistakes: 0, collected: [] };
     const app = document.getElementById("app");
 
-    function render() {
-      if (state.screen === "start") return renderStart();
-      if (state.screen === "question") return renderQuestion();
-      if (state.screen === "win") return renderWin();
-      if (state.screen === "lose") return renderLose();
+    /**********************
+     * RENDER PRINCIPALE
+     **********************/
+    function render(){
+      if(state.screen === "start") return renderStart();
+      if(state.screen === "question") return renderQuestion();
+      if(state.screen === "win") return renderWin();
+      if(state.screen === "lose") return renderLose();
     }
 
-    function progressPct() {
-      const total = GAME.questions.length;
-      return Math.round((state.idx / total) * 100);
-    }
-
-    function renderStart() {
+    function renderStart(){
       app.innerHTML = `
         <div class="row">
           <div class="col">
-            <h1>🍳 ${GAME.title}</h1>
-            <p>
-              Aiuta <b>${GAME.heroineName}</b> (ragazza mora con la frangetta) a cucinare il suo piatto preferito:
-              <b>${GAME.dishName}</b>. <br/>
-              Per riuscirci deve trovare la verdura giusta: <b>???</b>.<br/>
-              Rispondi alle domande per scoprire l’ingrediente!
-            </p>
-            <div class="badge">🧩 Domande: <b>${GAME.questions.length}</b>&nbsp;·&nbsp;❤️ Errori max: <b>${GAME.maxMistakes}</b></div>
-            <div class="footer">
-              <button class="btn primary" onclick="startGame()">Inizia</button>
+            <h1>🍜 ${GAME.title}</h1>
+            <p>Ciao <b>${GAME.heroineName}</b>! Raccogli gli ingredienti per il tuo piatto preferito: <b>${GAME.dishName}</b>.</p>
+            <p class="small">Passerai attraverso un piccolo viaggio culinario: rispondi alle domande per ottenere gli ingredienti e costruire la tua ciotola perfetta!</p>
+            <div style="display:flex; gap:10px; margin-top:12px;">
+              <button class="btn primary" onclick="startGame()">Inizia il viaggio</button>
               <button class="btn" onclick="showHowTo()">Come si gioca</button>
             </div>
-            <div id="extra" class="small" style="margin-top:10px;"></div>
+            <div id="howto" class="small" style="margin-top:12px;color:var(--muted)"></div>
           </div>
           <div class="col">
-            <div class="avatar" aria-label="personaggio">👩🏻‍🍳</div>
-            <p class="small" style="margin-top:10px;">
-              (Puoi sostituire l’emoji con un’illustrazione più avanti.)
-            </p>
+            <div id="startAvatar">${createAvatarSVG('neutral')}</div>
+            <p class="small" style="margin-top:8px;">Vedrai la tua espressione cambiare quando avanzi!</p>
           </div>
         </div>
       `;
     }
 
-    function renderQuestion(messageHtml = "") {
+    function renderQuestion(messageHtml=""){
       const total = GAME.questions.length;
       const q = GAME.questions[state.idx];
-      const pct = Math.min(100, progressPct());
-      app.innerHTML = `
-        <div class="row">
-          <div class="col">
-            <h1>Domanda ${state.idx + 1} / ${total}</h1>
-            <p>${q.q}</p>
+      const pct = Math.round((state.idx / total) * 100);
 
-            <div class="progress" title="Progresso"><div class="bar" style="width:${pct}%"></div></div>
-            <p class="small" style="margin-top:8px;">Progresso: ${pct}% · Errori: ${state.mistakes}/${GAME.maxMistakes}</p>
-
-            <div id="choices" style="display:grid; gap:10px; margin-top:12px;"></div>
-            ${messageHtml ? `<div style="margin-top:12px;">${messageHtml}</div>` : ""}
-            <div class="footer">
-              <button class="btn" onclick="restart()">Ricomincia</button>
+      // left visual path + bowl
+      const left = `
+        <div class="kitchen">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <strong>Ingredienti raccolti</strong>
+            <div style="font-size:13px; color:var(--muted)">${state.collected.length}/${GAME.questions.length} ingredienti</div>
+          </div>
+          <div class="path" id="pathArea">
+            ${createPathSVG()}
+            <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-top:8px;">
+              ${GAME.targetIngredients.map((it,i) => {
+                const isCollected = state.collected.includes(it);
+                const label = isCollected ? escapeHtml(shortLabel(it)) : '???';
+                return `<span style="font-size:11px; color:${isCollected ? 'var(--ok)' : 'var(--muted)'}; padding:2px 6px; background:rgba(255,255,255,0.03); border-radius:8px;">${label}</span>`;
+              }).join('')}
             </div>
           </div>
 
-          <div class="col">
-            <div class="avatar">👩🏻‍🍳</div>
-            <p class="small" style="margin-top:10px;">
-              Suggerimento disponibile: <b>${q.hint ? "sì" : "no"}</b>
-            </p>
-            ${q.hint ? `<button class="btn" onclick="showHint()">💡 Mostra suggerimento</button>` : ""}
+          <div class="bowl-area">
+            <div class="bowl" id="bowl">
+              <div class="contents" id="bowlContents">
+                ${state.collected.map(ci => `<div class="ingredient-pill">${emojiFor(ci)} ${escapeHtml(shortLabel(ci))}</div>`).join('')}
+              </div>
+            </div>
+            <div class="confetti" id="confetti"></div>
           </div>
         </div>
       `;
 
-      const choices = document.getElementById("choices");
-      q.choices.forEach((text, i) => {
-        const b = document.createElement("button");
-        b.className = "btn";
-        b.textContent = "• " + text;
-        b.onclick = () => answer(i);
-        choices.appendChild(b);
-      });
+      // right question panel
+      const right = `
+        <div class="question">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div>
+              <div id="heroAvatar">${createAvatarSVG('neutral')}</div>
+              <div class="avatar-label" style="text-align:center; font-size:13px; color:var(--muted)">${GAME.heroineName}</div>
+            </div>
+            <div style="flex:1">
+              <h1 style="font-size:16px; margin-bottom:6px">Domanda ${state.idx+1} / ${total}</h1>
+              <p style="margin-bottom:6px">${escapeHtml(q.q)}</p>
+              <div class="progress" title="Progresso"><div class="bar" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+
+          <div class="choices" id="choices">${q.choices.map((c,i) =>
+            `<button class="btn" onclick="answer(${i})"> ${escapeHtml(c)}</button>`).join('')}</div>
+
+          ${messageHtml ? `<div>${messageHtml}</div>` : ""}
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <button class="btn" onclick="restart()">Ricomincia</button>
+            ${q.hint ? `<button class="btn" onclick="showHint()">💡 Suggerimento</button>` : ""}
+          </div>
+        </div>
+      `;
+
+      app.innerHTML = `<div class="row"><div class="col">${left}</div><div class="col">${right}</div></div>`;
+
+      // aggiorna avatar classe se necessario
+      updateAvatarState();
     }
 
-    function renderWin() {
+    function renderWin(){
       app.innerHTML = `
-        <h1>🎉 Verdura trovata!</h1>
-        <p>
-          Bravə! Hai aiutato ${GAME.heroineName} a trovare la verdura giusta: <b>${GAME.targetVegetable}</b>.<br/>
-          Ora può cucinare il suo piatto preferito: <b>${GAME.dishName}</b>!
-        </p>
-        <div class="row">
-          <div class="col"><div class="avatar">🥬</div></div>
-          <div class="col"><div class="avatar">🍜</div></div>
-        </div>
-        <div class="footer">
-          <button class="btn primary" onclick="restart()">Gioca di nuovo</button>
+        <div style="text-align:center">
+          <h1>🎉 Complimenti ${GAME.heroineName} — ciotola completa!</h1>
+          <p>Hai raccolto tutti gli ingredienti per il tuo ${GAME.dishName}. Buon appetito!</p>
+          <div style="display:flex; gap:14px; justify-content:center; margin-top:12px;">
+            <div style="width:140px; height:140px;">${createAvatarSVG('happy')}</div>
+            <div style="min-width:220px">
+              <div class="bowl" style="margin:0 auto; width:320px; height:200px;">
+                <div style="display:flex; gap:6px; justify-content:center; align-items:flex-end; padding-bottom:16px; flex-wrap:wrap">
+                  ${GAME.targetIngredients.map(it => `<div class="ingredient-pill">${emojiFor(it)} ${shortLabel(it)}</div>`).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <button class="btn primary" onclick="restart()">Gioca di nuovo</button>
+          </div>
         </div>
       `;
     }
 
-    function renderLose() {
+    function renderLose(){
       app.innerHTML = `
-        <h1>😵 Oh no!</h1>
-        <p>
-          Troppi errori. ${GAME.heroineName} ha bruciato la pentola 😅<br/>
-          Vuoi riprovare a trovare la verdura giusta?
-        </p>
-        <div class="footer">
-          <button class="btn primary" onclick="restart()">Riprova</button>
+        <div style="text-align:center">
+          <h1>😢 Oh no — troppi errori</h1>
+          <p>Non ti scoraggiare ${GAME.heroineName}, puoi riprovare e completare la ciotola!</p>
+          <div style="margin-top:12px">
+            <button class="btn primary" onclick="restart()">Riprova</button>
+          </div>
         </div>
       `;
     }
 
-    // Azioni
-    window.startGame = function () {
-      state = { screen: "question", idx: 0, mistakes: 0 };
+    /**********************
+     * AZIONI / LOGICA
+     **********************/
+    window.startGame = function(){
+      AudioSystem.playClick();
+      AudioSystem.startMusic();
+      state = { screen: "question", idx: 0, mistakes: 0, collected: [] };
       render();
     };
 
-    window.restart = function () {
-      state = { screen: "start", idx: 0, mistakes: 0 };
+    window.restart = function(){
+      AudioSystem.playClick();
+      state = { screen: "start", idx: 0, mistakes: 0, collected: [] };
       render();
     };
 
-    window.showHowTo = function () {
-      const el = document.getElementById("extra");
-      el.innerHTML = "Rispondi alle domande. Se sbagli, aumentano gli errori. Se completi tutte le domande, trovi la verdura e vinci.";
+    window.showHowTo = function(){
+      const el = document.getElementById("howto");
+      if(el) el.innerHTML = "Rispondi alle domande: ogni risposta corretta aggiunge un ingrediente alla ciotola. Se sbagli diventi triste; dopo alcuni errori perdi. Buon viaggio culinario!";
     };
 
-    window.showHint = function () {
+    window.showHint = function(){
       const q = GAME.questions[state.idx];
-      renderQuestion(`<div class="msg">💡 <b>Suggerimento:</b> ${q.hint}</div>`);
+      renderQuestion(`<div class="msg">💡 <b>Suggerimento:</b> ${escapeHtml(q.hint)}</div>`);
     };
 
-    function answer(choiceIndex) {
+    window.answer = function(choiceIndex){
       const q = GAME.questions[state.idx];
       const correct = choiceIndex === q.correctIndex;
 
-      if (correct) {
-        state.idx += 1;
-        if (state.idx >= GAME.questions.length) {
-          state.screen = "win";
-          return render();
+      if(correct){
+        // colleziona l'ingrediente (se presente)
+        if(q.ingredient && !state.collected.includes(q.ingredient)){
+          state.collected.push(q.ingredient);
         }
-        return renderQuestion(`<div class="msg ok">✅ Esatto! Avanti…</div>`);
+        // suono e feedback tattile
+        AudioSystem.playCorrect();
+        // animazione di successo
+        triggerConfetti();
+        setAvatarExpression('happy');
+        state.idx += 1;
+        if(state.idx >= GAME.questions.length){
+          state.screen = "win";
+          setTimeout(() => AudioSystem.playVictory(), 300);
+          return setTimeout(render, 700);
+        }
+        // mostra messaggio e poi re-render
+        return setTimeout(() => renderQuestion(`<div class="msg ok">✅ Esatto! Hai aggiunto <b>${escapeHtml(q.ingredient || "un ingrediente")}</b> alla ciotola.</div>`), 220);
       } else {
         state.mistakes += 1;
-
-        if (!GAME.allowRetry) {
+        // suono e feedback tattile
+        AudioSystem.playWrong();
+        setAvatarExpression('sad');
+        if(!GAME.allowRetry || state.mistakes >= GAME.maxMistakes){
           state.screen = "lose";
-          return render();
+          setTimeout(() => AudioSystem.playGameOver(), 300);
+          return setTimeout(render, 700);
         }
+        // mostrato messaggio di errore
+        return setTimeout(() => renderQuestion(`<div class="msg bad">❌ Non è corretto. Errori: ${state.mistakes}/${GAME.maxMistakes}</div>`), 200);
+      }
+    };
 
-        if (state.mistakes >= GAME.maxMistakes) {
-          state.screen = "lose";
-          return render();
-        }
+    /**********************
+     * HELPERS (animazioni, avatar, mapping)
+     **********************/
+    function avatarEmoji(){
+      // base neutral avatar with name initial
+      return "👩🏻‍🍳";
+    }
 
-        return renderQuestion(`<div class="msg bad">❌ Non proprio. Riprova! (Errori: ${state.mistakes}/${GAME.maxMistakes})</div>`);
+    function createAvatarSVG(expression = 'neutral') {
+      // Espressioni: mouth paths
+      const mouths = {
+        neutral: 'M35,70 Q50,75 65,70',
+        happy: 'M35,68 Q50,82 65,68',
+        sad: 'M35,75 Q50,65 65,75',
+        talking: 'M38,70 Q50,78 62,70'
+      };
+      const mouthPath = mouths[expression] || mouths.neutral;
+      const eyeScaleY = expression === 'happy' ? 0.6 : 1;
+      const extraClass = expression !== 'neutral' ? expression : '';
+      
+      return `
+        <svg class="avatar-svg ${extraClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sfondo -->
+          <defs>
+            <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#ffe0bd"/>
+              <stop offset="100%" style="stop-color:#f5c9a6"/>
+            </linearGradient>
+            <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a1a0a"/>
+              <stop offset="100%" style="stop-color:#1a0f05"/>
+            </linearGradient>
+          </defs>
+          
+          <!-- Capelli dietro -->
+          <ellipse cx="50" cy="35" rx="42" ry="35" fill="url(#hairGrad)"/>
+          <ellipse cx="50" cy="55" rx="38" ry="25" fill="url(#hairGrad)"/>
+          
+          <!-- Viso -->
+          <ellipse cx="50" cy="50" rx="32" ry="36" fill="url(#skinGrad)"/>
+          
+          <!-- Capelli davanti -->
+          <path d="M20,35 Q25,15 50,12 Q75,15 80,35 Q75,25 50,22 Q25,25 20,35" fill="url(#hairGrad)"/>
+          <ellipse cx="22" cy="45" rx="8" ry="15" fill="url(#hairGrad)"/>
+          <ellipse cx="78" cy="45" rx="8" ry="15" fill="url(#hairGrad)"/>
+          
+          <!-- Sopracciglia -->
+          <path class="eyebrow eyebrow-left" d="M30,38 Q36,35 42,38" stroke="#4a3520" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path class="eyebrow eyebrow-right" d="M58,38 Q64,35 70,38" stroke="#4a3520" stroke-width="2" fill="none" stroke-linecap="round"/>
+          
+          <!-- Occhi -->
+          <g class="eye" style="transform-origin:36px 47px">
+            <ellipse cx="36" cy="47" rx="6" ry="${7 * eyeScaleY}" fill="white"/>
+            <circle class="pupil" cx="36" cy="47" r="3" fill="#3a2a1a"/>
+            <circle cx="34" cy="45" r="1" fill="white" opacity="0.8"/>
+          </g>
+          <g class="eye" style="transform-origin:64px 47px">
+            <ellipse cx="64" cy="47" rx="6" ry="${7 * eyeScaleY}" fill="white"/>
+            <circle class="pupil" cx="64" cy="47" r="3" fill="#3a2a1a"/>
+            <circle cx="62" cy="45" r="1" fill="white" opacity="0.8"/>
+          </g>
+          
+          <!-- Naso -->
+          <path d="M50,52 L48,58 Q50,60 52,58 Z" fill="#e8b090" opacity="0.6"/>
+          
+          <!-- Guance (blush) -->
+          <ellipse cx="28" cy="58" rx="6" ry="3" fill="#ffb3b3" opacity="${expression === 'happy' ? 0.5 : 0.25}"/>
+          <ellipse cx="72" cy="58" rx="6" ry="3" fill="#ffb3b3" opacity="${expression === 'happy' ? 0.5 : 0.25}"/>
+          
+          <!-- Bocca -->
+          <path class="mouth" d="${mouthPath}" stroke="#c47a6a" stroke-width="2.5" fill="${expression === 'happy' ? '#ff9999' : 'none'}" stroke-linecap="round"/>
+          
+          <!-- Cappello da chef -->
+          <ellipse cx="50" cy="18" rx="28" ry="12" fill="white"/>
+          <rect x="28" y="8" width="44" height="14" rx="4" fill="white"/>
+          <ellipse cx="50" cy="5" rx="18" ry="8" fill="white"/>
+          <ellipse cx="42" cy="3" rx="8" ry="5" fill="#f8f8f8"/>
+          <ellipse cx="58" cy="3" rx="8" ry="5" fill="#f8f8f8"/>
+          <ellipse cx="50" cy="0" rx="6" ry="4" fill="#f0f0f0"/>
+        </svg>
+      `;
+    }
+
+    function createPathSVG() {
+      const total = GAME.targetIngredients.length;
+      const width = 100;
+      const nodeSpacing = width / (total + 1);
+      
+      let nodes = '';
+      let pathD = 'M ';
+      
+      GAME.targetIngredients.forEach((it, i) => {
+        const x = nodeSpacing * (i + 1);
+        const y = 40 + Math.sin(i * 0.8) * 15; // Percorso ondulato
+        const isCollected = state.collected.includes(it);
+        const icon = isCollected ? emojiFor(it) : '❓';
+        const activeClass = isCollected ? 'active' : '';
+        
+        if (i === 0) pathD += `${x} ${y}`;
+        else pathD += ` Q ${x - nodeSpacing/2} ${y + (i % 2 ? -20 : 20)}, ${x} ${y}`;
+        
+        nodes += `
+          <g class="path-node ${activeClass}" data-ingredient="${escapeHtml(it)}" transform="translate(${x}, ${y})">
+            <circle r="14" cx="0" cy="0"/>
+            <text class="path-icon" x="0" y="5" text-anchor="middle" font-size="16">${icon}</text>
+          </g>
+        `;
+      });
+      
+      const progress = state.collected.length / total;
+      const dashOffset = 1000 - (1000 * progress);
+      
+      return `
+        <svg class="path-svg" viewBox="0 0 100 80" preserveAspectRatio="xMidYMid meet">
+          <path class="path-line" d="${pathD}"/>
+          <path class="path-line-progress" d="${pathD}" style="stroke-dashoffset:${dashOffset}"/>
+          ${nodes}
+        </svg>
+      `;
+    }
+
+    function triggerBowlBoil() {
+      const bowl = document.getElementById('bowl');
+      if (!bowl) return;
+      
+      bowl.classList.add('boiling', 'adding');
+      
+      // Aggiungi bolle
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const bubble = document.createElement('div');
+          bubble.className = 'bubble';
+          bubble.style.left = (20 + Math.random() * 60) + '%';
+          bubble.style.bottom = '30%';
+          bubble.style.width = bubble.style.height = (8 + Math.random() * 12) + 'px';
+          bubble.style.animationDelay = (Math.random() * 0.5) + 's';
+          bowl.appendChild(bubble);
+          setTimeout(() => bubble.remove(), 1500);
+        }, i * 150);
+      }
+      
+      setTimeout(() => {
+        bowl.classList.remove('adding');
+      }, 400);
+      
+      setTimeout(() => {
+        bowl.classList.remove('boiling');
+      }, 2000);
+    }
+
+    function setAvatarTalking(talking) {
+      const avatar = document.querySelector('.avatar-svg');
+      if (!avatar) return;
+      if (talking) {
+        avatar.classList.add('talking');
+      } else {
+        avatar.classList.remove('talking');
       }
     }
 
+    function setAvatarExpression(expr){
+      // Aggiorna l'avatar SVG
+      const el = document.getElementById('heroAvatar');
+      if(el) {
+        el.innerHTML = createAvatarSVG(expr);
+      }
+      
+      // Aggiorna anche l'avatar della start screen se presente
+      const startAv = document.getElementById('startAvatar');
+      if(startAv){
+        startAv.innerHTML = createAvatarSVG(expr);
+      }
+      
+      // Attiva animazione della ciotola se risposta corretta
+      if(expr === 'happy') {
+        triggerBowlBoil();
+      }
+      
+      // torna neutro dopo un po'
+      clearTimeout(window._exprTO);
+      window._exprTO = setTimeout(()=>{ 
+        if(el) el.innerHTML = createAvatarSVG('neutral');
+      }, 2000);
+      
+      // aggiorna bowl grafica
+      updateBowlContents();
+    }
+
+    function updateAvatarState(){
+      // all'avvio della schermata domanda, mostra espressione neutra
+      const el = document.getElementById('heroAvatar');
+      if(el) el.classList.remove('happy','sad');
+      updateBowlContents();
+    }
+
+    function updateBowlContents(){
+      const contents = document.getElementById('bowlContents');
+      if(!contents) return;
+      contents.innerHTML = state.collected.map(ci => `<div class="ingredient-pill">${emojiFor(ci)} ${escapeHtml(shortLabel(ci))}</div>`).join('');
+      // aggiorna path: mark active quelli raccolti
+      document.querySelectorAll('#pathArea .step').forEach(node=>{
+        const ing = node.getAttribute('data-ingredient');
+        if(state.collected.includes(ing)) node.classList.add('active');
+        else node.classList.remove('active');
+      });
+      // aggiorna barra progresso
+      const pct = Math.round((state.collected.length / GAME.targetIngredients.length) * 100);
+      const bar = document.querySelector('.bar');
+      if(bar) bar.style.width = pct + '%';
+    }
+
+    function triggerConfetti(){
+      // genera qualche elemento confetti nella area bowl
+      const wrap = document.getElementById('confetti');
+      if(!wrap) return;
+      for(let i=0;i<10;i++){
+        const el = document.createElement('i');
+        el.style.left = (10 + Math.random()*80) + '%';
+        el.style.background = ['#FFD97D','#FF9AA2','#B8F2E6','#9EE493'][Math.floor(Math.random()*4)];
+        el.style.top = (10 + Math.random()*10) + '%';
+        el.style.transform = `translateY(-10px) rotate(${Math.random()*360}deg)`;
+        el.style.animationDuration = (700 + Math.random()*600) + 'ms';
+        wrap.appendChild(el);
+        setTimeout(()=> el.remove(), 1400);
+      }
+    }
+
+    function emojiFor(label){
+      // mapping semplice per icone
+      const m = {
+        "Miso paste":"🧂","Ramen noodles":"🍜","Chashu (pork)":"🥩","Ajitama (uovo)":"🥚",
+        "Spinaci/Bok choy":"🥬","Mais":"🌽","Bamboo shoots":"🎍","Aglio & Zenzero":"🧄"
+      };
+      return m[label] || '🍥';
+    }
+
+    function shortLabel(label){
+      // rendi più corto per visual
+      return label.replace(/\s*\(.+\)/,'').replace('paste','').trim();
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
+    }
+
+    /**********************
+     * BOOT
+     **********************/
+    createAudioControls();
     render();
   </script>
 </body>
