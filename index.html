@@ -422,11 +422,28 @@
       
       toggleMusic() {
         this.musicMuted = !this.musicMuted;
-        if (this.musicMuted) {
-          this.stopMusic();
+        
+        // Controllo volume immediato con GainNode
+        if (this.musicGain) {
+          const now = this.ctx.currentTime;
+          this.musicGain.gain.cancelScheduledValues(now);
+          if (this.musicMuted) {
+             // Muto immediato con piccola rampa per evitare click
+             this.musicGain.gain.setValueAtTime(this.musicGain.gain.value, now);
+             this.musicGain.gain.linearRampToValueAtTime(0, now + 0.1);
+          } else {
+             // Ripristina volume
+             this.musicGain.gain.setValueAtTime(0, now);
+             this.musicGain.gain.linearRampToValueAtTime(0.15, now + 0.5);
+             
+             // Se il loop non stava andando (e.g. fermato inizialmente), avvialo
+             if (!this.musicPlaying) this.startMusic();
+          }
         } else {
-          this.startMusic();
+          // Se contesto non ancora init
+          if (!this.musicMuted) this.startMusic(); 
         }
+        
         this.updateMusicButton();
       },
       
@@ -621,7 +638,7 @@
           <div style="background: linear-gradient(135deg, rgba(61,220,151,0.1), rgba(255,184,107,0.1)); border-radius:16px; padding:20px; margin:24px auto; max-width:450px; border:1px solid rgba(255,255,255,0.08);">
             <p style="font-size:16px; color:var(--txt); margin:0 0 8px;">💌 E ora... la vera sorpresa:</p>
             <p style="font-size:20px; color:var(--accent); margin:0; font-weight:600;">Ti va di venire a mangiarlo insieme a me? 🥰</p>
-            <p style="font-size:14px; color:var(--muted); margin-top:12px;">— Con affetto ❤️</p>
+            <p style="font-size:14px; color:var(--muted); margin-top:12px;">— Con affetto, Giacomo ❤️</p>
           </div>
           
           <div style="margin-top:20px;">
