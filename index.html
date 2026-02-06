@@ -4,72 +4,118 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Un Regalo Speciale per Maria Luisa 💝</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b1020; --card:#0f1730; --txt:#e9eeff; --muted:#a9b3d6;
-      --accent:#ffb86b; --ok:#3ddc97; --bad:#ff5a7a;
+      --bg:#1a1c29; --card:rgba(23, 30, 50, 0.7); --txt:#f0f4f8; --muted:#94a3b8;
+      --accent:#ff9f43; --ok:#2ecc71; --bad:#ff6b6b;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-btn: linear-gradient(45deg, #11998e, #38ef7d);
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --shadow-soft: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(1200px 800px at 30% 10%, #1a2a6c55, transparent), var(--bg);
+      margin:0; font-family: 'Quicksand', sans-serif;
+      background: radial-gradient(circle at top left, #2c3e50, #000000);
+      background-size: 200% 200%;
+      animation: gradientBG 15s ease infinite;
       color:var(--txt); -webkit-font-smoothing:antialiased;
-    }
-    .wrap{max-width:1100px; margin:24px auto; padding:18px;}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-          border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:18px; box-shadow:0 10px 40px rgba(0,0,0,.45);}
-    h1{margin:0 0 6px; font-size:20px}
-    p{margin:0 0 10px; color:var(--muted); line-height:1.4}
-    .row{display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap}
-    .col{flex:1 1 300px; min-width:260px}
-    /* Left: percorso visivo */
-    .kitchen{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,.04);
-      min-height:360px; display:flex; flex-direction:column; gap:12px;
-    }
-    .path{display:flex; gap:10px; align-items:center; overflow-x:auto; padding-bottom:6px}
-    .step{
-      min-width:110px; padding:12px; border-radius:12px; background:rgba(255,255,255,0.02);
-      text-align:center; border:1px solid rgba(255,255,255,.04); transition:transform .2s ease;
-    }
-    .step.active{ box-shadow: 0 6px 18px rgba(0,0,0,.5); transform:translateY(-6px); border-color: rgba(255,255,255,.08); }
-    .ingredient-icon{ font-size:36px; display:block; margin-bottom:8px }
-    .bowl-area{flex:1; display:flex; align-items:center; justify-content:center; position:relative}
-    .bowl{
-      width:320px; height:200px; border-radius:999px 999px 100px 100px / 100px; background:linear-gradient(180deg,#ffcda3,#ffb86b);
-      position:relative; box-shadow: inset 0 -12px 30px rgba(0,0,0,.15);
-      display:flex; align-items:flex-end; justify-content:center; padding-bottom:20px; overflow:visible;
-    }
-    .bowl .contents{ width:90%; display:flex; gap:8px; justify-content:center; align-items:flex-end; flex-wrap:wrap }
-    .ingredient-pill{ background:rgba(255,255,255,.06); padding:6px 8px; border-radius:999px; font-size:14px; }
-    /* Right: domande */
-    .question{
-      padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-      border:1px solid rgba(255,255,255,.04);
-    }
-    .avatar{
-      width:120px; height:120px; border-radius:16px; display:flex; align-items:center; justify-content:center;
-      font-size:56px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.04);
-      transition: transform .25s ease, box-shadow .25s ease;
-      margin:0 auto 8px;
-    }
-    .avatar.happy{ transform: translateY(-6px) scale(1.05); box-shadow:0 12px 30px rgba(61,220,151,.12); }
-    .avatar.sad{ transform: translateY(0) scale(.98) rotate(-2deg); box-shadow:0 6px 18px rgba(255,90,122,.08); filter:grayscale(.15); }
-    .avatar .label{ display:block; font-size:12px; color:var(--muted); margin-top:6px; text-align:center }
-    
-    /* Cute Avatar Emoji animato */
-    .cute-avatar {
-      font-size: 72px;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 120px;
-      height: 120px;
-      margin: 0 auto;
-      animation: float 3s ease-in-out infinite;
+      flex-direction: column;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .wrap{max-width:1100px; margin:auto; padding:20px; width: 100%;}
+    .card{
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius:24px; 
+      padding:24px; 
+      box-shadow: var(--shadow-soft);
       transition: transform 0.3s ease;
     }
+    h1{margin:0 0 10px; font-weight:700; font-size:24px; letter-spacing: -0.5px;}
+    p{margin:0 0 16px; color:var(--muted); line-height:1.6; font-size: 16px;}
+    
+    .row{display:flex; gap:24px; align-items:stretch; flex-wrap:wrap}
+    .col{flex:1 1 320px; min-width:280px}
+    
+    /* Left: percorso visivo */
+    .kitchen{
+      background: rgba(0,0,0,0.2);
+      border-radius:20px; padding:20px; border:1px solid var(--glass-border);
+      min-height:400px; display:flex; flex-direction:column; gap:16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kitchen::before {
+      content: ''; position: absolute; top: -50px; left: -50px; width: 150px; height: 150px;
+      background: var(--accent); opacity: 0.1; filter: blur(50px); border-radius: 50%;
+    }
+    .path{display:flex; gap:12px; align-items:center; overflow-x:auto; padding-bottom:10px; scrollbar-width: thin;}
+    .path::-webkit-scrollbar { height: 6px; }
+    .path::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    
+    .bowl-area{flex:1; display:flex; align-items:center; justify-content:center; position:relative; min-height: 200px;}
+    .bowl{
+      width:340px; height:220px; 
+      border-radius: 10px 10px 140px 140px; 
+      background: linear-gradient(135deg, #4a4e69 0%, #22223b 100%);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-top: none;
+      position:relative; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 -10px 20px rgba(0,0,0,0.5);
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:25px; overflow:visible;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .bowl::after {
+      content:''; position:absolute; bottom: -15px; width: 80%; height: 20px;
+      background: rgba(0,0,0,0.4); filter: blur(10px); z-index: -1; border-radius: 50%;
+    }
+    .bowl:hover { transform: translateY(-5px) scale(1.02); }
+    
+    .bowl .contents{ width:90%; display:flex; gap:6px; justify-content:center; align-items:flex-end; flex-wrap:wrap; position: relative; z-index: 2;}
+    .ingredient-pill{ 
+      background: rgba(255,255,255,0.15); 
+      backdrop-filter: blur(4px);
+      padding:4px 8px; border-radius:16px; font-size:11px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      opacity: 0; transform: scale(0.5);
+    }
+    @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+    
+    /* Right: domande */
+    .question{
+      padding:24px; border-radius:20px; 
+      background: rgba(255,255,255,0.02);
+      border:1px solid var(--glass-border);
+      height: 100%;
+      display: flex; flex-direction: column;
+    }
+    
+    .cute-avatar {
+      font-size: 80px;
+      display: flex; align-items: center; justify-content: center;
+      width: 140px; height: 140px;
+      margin: 0 auto 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: float 4s ease-in-out infinite;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
     .cute-avatar.happy {
       animation: bounce 0.6s ease;
       transform: scale(1.1);
@@ -97,31 +143,85 @@
     }
     
     .choices{display:grid; gap:10px; margin-top:12px}
-    .btn{ width:100%; border:0; border-radius:12px; padding:10px 12px; font-size:15px; cursor:pointer; background:rgba(255,255,255,.03); color:var(--txt); text-align:left;
-          transition:transform .06s ease, background .12s ease, box-shadow .12s ease;}
-    .btn:hover{ background: rgba(255,255,255,.06); }
-    .btn.primary{ background: linear-gradient(90deg, rgba(61,220,151,.16), rgba(255,200,100,.06)); border:1px solid rgba(255,255,255,.06); }
-    .msg{ margin-top:12px; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02) }
-    .msg.ok{ border-color: rgba(61,220,151,.2); }
-    .msg.bad{ border-color: rgba(255,90,122,.18); }
-    .progress{ height:10px; background:rgba(255,255,255,.03); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.04); }
-    .bar{ height:100%; width:0%; background:linear-gradient(90deg,var(--ok), #7be2c1); transition:width .4s ease; }
+    .btn{ 
+      width:100%; border:0; border-radius:12px; padding:12px 16px; font-size:16px; 
+      font-weight: 600; font-family: inherit;
+      cursor:pointer; 
+      background: rgba(255,255,255,0.05); 
+      color:var(--txt); text-align:left;
+      transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid transparent;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .btn:hover{ 
+      background: rgba(255,255,255,0.1); 
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .btn:active { transform: translateX(2px) scale(0.99); }
+    
+    .btn.primary{ 
+      background: var(--gradient-btn); 
+      color: #0b1020;
+      border: none;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+    }
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(56, 239, 125, 0.6);
+    }
+    
+    .msg{ 
+      margin-top:16px; padding:12px 16px; border-radius:12px; 
+      border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.02);
+      font-size: 15px; animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp { from {opacity:0; transform:translateY(10px)} to {opacity:1; transform:translateY(0)} }
+    
+    .msg.ok{ border-left: 4px solid var(--ok); background: linear-gradient(90deg, rgba(46, 204, 113, 0.1), transparent); }
+    .msg.bad{ border-left: 4px solid var(--bad); background: linear-gradient(90deg, rgba(255, 107, 107, 0.1), transparent); }
+    
+    .progress{ height:8px; background:rgba(255,255,255,.05); border-radius:999px; overflow:hidden; margin-top: 12px;}
+    .bar{ 
+      height:100%; width:0%; 
+      background: var(--gradient-primary); 
+      transition:width .6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      box-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
+    }
     
     /* Controlli audio */
-    .audio-controls { position:fixed; top:16px; right:16px; display:flex; gap:8px; z-index:100; }
-    .audio-btn { width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,0.1); 
-                 background:rgba(15,23,48,0.9); color:var(--txt); font-size:18px; cursor:pointer;
-                 display:flex; align-items:center; justify-content:center; transition:all 0.2s ease;
-                 backdrop-filter: blur(10px); }
-    .audio-btn:hover { background:rgba(255,255,255,0.1); transform:scale(1.1); }
-    .audio-btn.muted { opacity:0.5; }
-    .audio-btn.playing { animation: pulse 1s infinite; }
-    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(61,220,151,0.4)} 50%{box-shadow:0 0 0 8px rgba(61,220,151,0)} }
+    .audio-controls { position:fixed; top:20px; right:20px; display:flex; gap:12px; z-index:100; }
+    .audio-btn { 
+      width:44px; height:44px; border-radius:50%; 
+      border:1px solid rgba(255,255,255,0.2); 
+      background: rgba(15,23,48,0.6); 
+      color:var(--txt); font-size:20px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; 
+      transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px); 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .audio-btn:hover { background:rgba(255,255,255,0.2); transform:rotate(15deg) scale(1.1); }
+    .audio-btn.muted { opacity:0.6; filter: grayscale(1); }
+    .audio-btn.playing { animation: pulse 2s infinite; border-color: var(--ok); color: var(--ok); }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(46, 204, 113, 0.4)} 70%{box-shadow:0 0 0 10px rgba(46, 204, 113, 0)} 100%{box-shadow:0 0 0 0 rgba(46, 204, 113, 0)} }
     
-    /* confetti semplice */
-    .confetti{ position:absolute; left:0; right:0; top:0; bottom:0; pointer-events:none; overflow:hidden; }
-    .confetti i{ position:absolute; width:10px; height:14px; background:var(--accent); opacity:0.95; transform:translateY(-10px); animation:fall 900ms linear forwards; border-radius:2px;}
-    @keyframes fall { to { transform: translateY(260px) rotate(360deg); opacity:0; } }
+    /* confetti improved */
+    .confetti i{ 
+      position:absolute; width:8px; height:8px; 
+      background:var(--accent); 
+      border-radius: 50%;
+      animation: fall 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      box-shadow: 0 0 5px currentColor;
+    }
+    @keyframes fall { 
+      0% { transform: translateY(-20px) scale(0); opacity: 0; }
+      20% { opacity: 1; transform: translateY(0) scale(1.2); }
+      100% { transform: translateY(200px) rotate(720deg) scale(0.5); opacity:0; } 
+    }
     
     /* Avatar SVG animato */
     .avatar-svg { width:120px; height:120px; }
@@ -188,262 +288,197 @@
       ctx: null,
       musicGain: null,
       sfxGain: null,
+      
+      // Stati
       musicMuted: false,
       sfxMuted: false,
       musicPlaying: false,
-      musicOsc: null,
       
+      // Scheduling (Lookahead system)
+      nextNoteTime: 0.0,
+      currentNoteIndex: 0,
+      timerID: null,
+      tempo: 0.25, // Durata base della nota in secondi (veloce/allegro)
+      melody: [
+        // C Major Joyful Pattern (Continuous)
+        261.63, 329.63, 392.00, 523.25, // C E G C
+        392.00, 329.63, 261.63, 196.00, // G E C G_low
+        293.66, 349.23, 392.00, 440.00, // D F G A
+        392.00, 349.23, 293.66, 392.00, // G F D G
+        329.63, 392.00, 523.25, 659.25, // E G C E
+        523.25, 392.00, 329.63, 261.63, // C G E C
+        349.23, 440.00, 523.25, 587.33, // F A C D
+        523.25, 493.88, 392.00, 261.63  // C B G C
+      ],
+
       init() {
         if (this.ctx) return;
-        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new AudioContext();
         
-        // Gain nodes per controllo volume
         this.musicGain = this.ctx.createGain();
-        this.musicGain.gain.value = 0.15;
+        this.musicGain.gain.value = 0.10; // Volume musica basso
         this.musicGain.connect(this.ctx.destination);
         
         this.sfxGain = this.ctx.createGain();
-        this.sfxGain.gain.value = 0.4;
+        this.sfxGain.gain.value = 0.40; // Volume SFX normale
         this.sfxGain.connect(this.ctx.destination);
       },
-      
-      resume() {
-        if (this.ctx && this.ctx.state === 'suspended') {
-          this.ctx.resume();
+
+      startMusic() {
+        // Se è già in riproduzione, NON fare nulla per evitare interruzioni/reset
+        if (this.musicPlaying && !this.musicMuted) return;
+        if (this.musicMuted) return;
+
+        this.init();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+
+        this.musicPlaying = true;
+        this.currentNoteIndex = 0;
+        this.nextNoteTime = this.ctx.currentTime + 0.1; // Primo start
+        
+        this.scheduleLoop();
+        this.updateMusicButton();
+      },
+
+      scheduleLoop() {
+        if (!this.musicPlaying) return;
+        
+        const lookahead = 0.1; // 100ms di anticipo
+        const currentTime = this.ctx.currentTime;
+
+        // Pianifica tutte le note che devono suonare nel prossimo intervallo
+        while (this.nextNoteTime < currentTime + lookahead) {
+            this.playScheduledNote(this.nextNoteTime);
+            this.nextNote();
         }
+
+        this.timerID = setTimeout(() => this.scheduleLoop(), 25);
+      },
+
+      playScheduledNote(time) {
+        // Ottieni frequenza
+        const freq = this.melody[this.currentNoteIndex % this.melody.length];
+        
+        // Suona
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        
+        // Envelope breve e staccato
+        const dur = this.tempo * 0.8; 
+        
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(0.1, time + 0.02);
+        gain.gain.setValueAtTime(0.1, time + dur - 0.02);
+        gain.gain.linearRampToValueAtTime(0, time + dur);
+        
+        osc.connect(gain);
+        gain.connect(this.musicGain);
+        
+        osc.start(time);
+        osc.stop(time + dur + 0.05); // Cleanup sicuro
+        
+        osc.onended = () => {
+            osc.disconnect();
+            gain.disconnect();
+        };
+      },
+
+      nextNote() {
+        // Avanza tempo e indice
+        this.nextNoteTime += this.tempo;
+        this.currentNoteIndex++;
+      },
+
+      stopMusic() {
+        this.musicPlaying = false;
+        if (this.timerID) clearTimeout(this.timerID);
+        this.updateMusicButton();
       },
       
-      // Effetto sonoro risposta corretta (melodia allegra)
+      // --- SFX (Effetti Sonori) ---
+      
       playCorrect() {
         if (this.sfxMuted) return;
-        this.init();
-        this.resume();
-        
+        this.init(); this.ctx.resume();
         const now = this.ctx.currentTime;
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-        
-        notes.forEach((freq, i) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          
-          osc.type = 'sine';
-          osc.frequency.value = freq;
-          
-          gain.gain.setValueAtTime(0, now + i * 0.1);
-          gain.gain.linearRampToValueAtTime(0.3, now + i * 0.1 + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.3);
-          
-          osc.connect(gain);
-          gain.connect(this.sfxGain);
-          
-          osc.start(now + i * 0.1);
-          osc.stop(now + i * 0.1 + 0.35);
-        });
-        
-        // Vibrazione leggera su mobile
-        this.vibrate([50, 30, 50]);
+        // Trillo ascendente rapido
+        [523.25, 659.25, 783.99, 1046.50].forEach((f,i) => this.playToneSfx(f, now+i*0.08, 0.2, 'sine'));
+        this.vibrate([50]);
       },
-      
-      // Effetto sonoro risposta sbagliata (suono triste)
+
       playWrong() {
         if (this.sfxMuted) return;
-        this.init();
-        this.resume();
-        
+        this.init(); this.ctx.resume();
         const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(300, now);
-        osc.frequency.exponentialRampToValueAtTime(150, now + 0.3);
-        
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-        
-        osc.connect(gain);
-        gain.connect(this.sfxGain);
-        
-        osc.start(now);
-        osc.stop(now + 0.5);
-        
-        // Vibrazione forte su mobile
-        this.vibrate([100, 50, 100, 50, 100]);
+        this.playToneSfx(200, now, 0.3, 'sawtooth', true); // Buzz
+        this.vibrate([100]);
       },
       
-      // Suono click bottone
       playClick() {
         if (this.sfxMuted) return;
-        this.init();
-        this.resume();
-        
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        
-        osc.type = 'sine';
-        osc.frequency.value = 800;
-        
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-        
-        osc.connect(gain);
-        gain.connect(this.sfxGain);
-        
-        osc.start(now);
-        osc.stop(now + 0.1);
-        
-        this.vibrate(10);
+        this.init(); this.ctx.resume();
+        this.playToneSfx(880, this.ctx.currentTime, 0.05, 'sine');
       },
       
-      // Fanfara vittoria
       playVictory() {
         if (this.sfxMuted) return;
-        this.init();
-        this.resume();
-        
+        this.init(); this.ctx.resume();
         const now = this.ctx.currentTime;
-        const melody = [
-          { freq: 523.25, time: 0, dur: 0.15 },
-          { freq: 659.25, time: 0.15, dur: 0.15 },
-          { freq: 783.99, time: 0.3, dur: 0.15 },
-          { freq: 1046.50, time: 0.45, dur: 0.4 },
-          { freq: 783.99, time: 0.9, dur: 0.15 },
-          { freq: 1046.50, time: 1.05, dur: 0.5 }
-        ];
-        
-        melody.forEach(note => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          
-          osc.type = 'triangle';
-          osc.frequency.value = note.freq;
-          
-          gain.gain.setValueAtTime(0, now + note.time);
-          gain.gain.linearRampToValueAtTime(0.3, now + note.time + 0.02);
-          gain.gain.setValueAtTime(0.25, now + note.time + note.dur - 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.dur);
-          
-          osc.connect(gain);
-          gain.connect(this.sfxGain);
-          
-          osc.start(now + note.time);
-          osc.stop(now + note.time + note.dur + 0.1);
-        });
-        
+        // Fanfara semplice sovrapposta alla musica
+        this.playToneSfx(523.25, now, 0.4, 'square');       // C
+        this.playToneSfx(783.99, now + 0.1, 0.4, 'square'); // G
+        this.playToneSfx(1046.50, now + 0.2, 0.8, 'square'); // C high
         this.vibrate([100, 50, 100, 50, 200]);
       },
       
-      // Suono game over
       playGameOver() {
+        // Non usato nel design attuale ma teniamo la funzione
         if (this.sfxMuted) return;
-        this.init();
-        this.resume();
-        
+        this.init(); this.ctx.resume();
         const now = this.ctx.currentTime;
-        const notes = [392, 349.23, 329.63, 261.63]; // G4, F4, E4, C4
-        
-        notes.forEach((freq, i) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          
-          osc.type = 'sine';
-          osc.frequency.value = freq;
-          
-          gain.gain.setValueAtTime(0, now + i * 0.25);
-          gain.gain.linearRampToValueAtTime(0.2, now + i * 0.25 + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.25 + 0.4);
-          
-          osc.connect(gain);
-          gain.connect(this.sfxGain);
-          
-          osc.start(now + i * 0.25);
-          osc.stop(now + i * 0.25 + 0.5);
-        });
-        
-        this.vibrate([200, 100, 300]);
+        [392, 349.23, 330, 261].forEach((f,i) => this.playToneSfx(f, now+i*0.3, 0.5, 'sine'));
       },
       
-      // Musica di sottofondo (loop melodico giapponese-style)
-      startMusic() {
-        if (this.musicMuted || this.musicPlaying) return;
-        this.init();
-        this.resume();
-        this.musicPlaying = true;
+      playToneSfx(freq, time, dur, type, slideDown=false) {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, time);
+        if(slideDown) osc.frequency.exponentialRampToValueAtTime(Math.max(freq/4, 40), time + dur);
         
-        const playLoop = () => {
-          if (!this.musicPlaying || this.musicMuted) return;
-          
-          const now = this.ctx.currentTime;
-          // Scala pentatonica giapponese
-          const scale = [261.63, 293.66, 349.23, 392, 466.16, 523.25, 587.33]; // C, D, F, G, Bb, C5, D5
-          const pattern = [0, 2, 3, 4, 3, 2, 0, 2, 4, 5, 4, 3, 2, 0];
-          const noteDuration = 0.5;
-          
-          pattern.forEach((noteIdx, i) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            const filter = this.ctx.createBiquadFilter();
-            
-            filter.type = 'lowpass';
-            filter.frequency.value = 800;
-            
-            osc.type = 'sine';
-            osc.frequency.value = scale[noteIdx];
-            
-            const startTime = now + i * noteDuration;
-            gain.gain.setValueAtTime(0, startTime);
-            gain.gain.linearRampToValueAtTime(0.15, startTime + 0.05);
-            gain.gain.setValueAtTime(0.12, startTime + noteDuration - 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.001, startTime + noteDuration);
-            
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(this.musicGain);
-            
-            osc.start(startTime);
-            osc.stop(startTime + noteDuration + 0.1);
-          });
-          
-          // Loop dopo che il pattern finisce
-          setTimeout(() => {
-            if (this.musicPlaying && !this.musicMuted) playLoop();
-          }, pattern.length * noteDuration * 1000);
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(0.3, time + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.01, time + dur);
+        
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+        osc.start(time);
+        osc.stop(time + dur + 0.1);
+        
+        osc.onended = () => {
+             osc.disconnect();
+             gain.disconnect();
         };
-        
-        playLoop();
-        this.updateMusicButton();
       },
-      
-      stopMusic() {
-        this.musicPlaying = false;
-        this.updateMusicButton();
-      },
-      
+
       toggleMusic() {
         this.musicMuted = !this.musicMuted;
+        const now = this.ctx.currentTime;
         
-        // Controllo volume immediato con GainNode
-        if (this.musicGain) {
-          const now = this.ctx.currentTime;
-          this.musicGain.gain.cancelScheduledValues(now);
-          if (this.musicMuted) {
-             // Muto immediato con piccola rampa per evitare click
-             this.musicGain.gain.setValueAtTime(this.musicGain.gain.value, now);
-             this.musicGain.gain.linearRampToValueAtTime(0, now + 0.1);
-          } else {
-             // Ripristina volume
-             this.musicGain.gain.setValueAtTime(0, now);
-             this.musicGain.gain.linearRampToValueAtTime(0.15, now + 0.5);
-             
-             // Se il loop non stava andando (e.g. fermato inizialmente), avvialo
-             if (!this.musicPlaying) this.startMusic();
-          }
+        if (this.musicMuted) {
+             // Fade out rapido
+             if(this.musicGain) this.musicGain.gain.linearRampToValueAtTime(0, now + 0.2);
+             this.stopMusic();
         } else {
-          // Se contesto non ancora init
-          if (!this.musicMuted) this.startMusic(); 
+             if(this.musicGain) {
+                 this.musicGain.gain.setValueAtTime(0, now);
+                 this.musicGain.gain.linearRampToValueAtTime(0.1, now + 0.5);
+             }
+             this.startMusic();
         }
-        
         this.updateMusicButton();
       },
       
@@ -458,7 +493,7 @@
         if (btn) {
           btn.textContent = this.musicMuted ? '🔇' : '🎵';
           btn.classList.toggle('muted', this.musicMuted);
-          btn.classList.toggle('playing', this.musicPlaying && !this.musicMuted);
+          btn.classList.toggle('playing', this.musicPlaying);
         }
       },
       
@@ -470,11 +505,8 @@
         }
       },
       
-      // Vibrazione tattile per mobile
       vibrate(pattern) {
-        if ('vibrate' in navigator) {
-          navigator.vibrate(pattern);
-        }
+        if ('vibrate' in navigator) navigator.vibrate(pattern);
       }
     };
     
@@ -533,19 +565,20 @@
 
     function renderStart(){
       app.innerHTML = `
-        <div class="row">
+        <div class="row" style="align-items: center; min-height: 400px;">
           <div class="col">
-            <h1>💝 ${GAME.title}</h1>
-            <p>Ciao <b>${GAME.heroineName}</b>! 🌸</p>
-            <p>Ho preparato un piccolo gioco per te... Rispondi alle domande e scoprirai, ingrediente dopo ingrediente, quale sorpresa ti attende!</p>
-            <p class="small" style="color:var(--accent); font-style:italic;">Ogni risposta giusta ti avvicina alla rivelazione finale... ✨</p>
-            <div style="display:flex; gap:10px; margin-top:16px;">
-              <button class="btn primary" onclick="startGame()">🌟 Inizia l'avventura</button>
+            <h1 style="font-size: 32px; background: linear-gradient(to right, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">💝 ${GAME.title}</h1>
+            <p style="font-size: 18px;">Ciao <b>${GAME.heroineName}</b>! 🌸</p>
+            <p style="font-size: 16px; opacity: 0.9;">Ho preparato un piccolo gioco culinario per te... Rispondi correttamente alle domande per raccogliere tutti gli ingredienti segreti.</p>
+            <p class="small" style="color:var(--accent); font-style:italic; border-left: 2px solid var(--accent); padding-left: 10px;">Ogni risposta giusta ti avvicina alla rivelazione finale... ✨</p>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+              <button class="btn primary" onclick="startGame()" style="width: auto; padding: 12px 32px; font-size: 18px;">🌟 Inizia l'avventura</button>
             </div>
           </div>
-          <div class="col" style="text-align:center;">
-            <div class="cute-avatar" id="startAvatar">👩🏻‍🍳</div>
-            <p class="small" style="margin-top:12px; color:var(--muted);">Pronta a scoprire cosa ti aspetta?</p>
+          <div class="col" style="text-align:center; position: relative;">
+             <div style="position: absolute; width: 200px; height: 200px; background: var(--gradient-primary); filter: blur(60px); opacity: 0.3; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; z-index: 0;"></div>
+            <div class="cute-avatar" id="startAvatar" style="position: relative; z-index: 1;">👩🏻‍🍳</div>
+            <p class="small" style="margin-top:16px; color:var(--muted); letter-spacing: 1px; text-transform: uppercase; font-size: 12px; font-weight: 600;">Sei pronta a cucinare?</p>
           </div>
         </div>
       `;
@@ -619,32 +652,71 @@
 
     function renderWin(){
       app.innerHTML = `
-        <div style="text-align:center; padding:20px;">
-          <h1>🎉🌸 Bravissima ${GAME.heroineName}! 🌸🎉</h1>
-          <p style="font-size:18px; margin:16px 0;">Hai scoperto tutti gli ingredienti...</p>
-          
-          <div style="background: linear-gradient(135deg, rgba(255,184,107,0.15), rgba(255,150,180,0.1)); border-radius:20px; padding:24px; margin:20px auto; max-width:500px; border:1px solid rgba(255,255,255,0.1);">
-            <div style="font-size:48px; margin-bottom:12px;">🍜</div>
-            <h2 style="color:var(--accent); margin:0 0 8px;">Il piatto misterioso era...</h2>
-            <h1 style="font-size:28px; color:var(--txt); margin:0;">${GAME.dishName}!</h1>
+        <div style="text-align:center; padding:30px 20px; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;">
+             <div style="position:absolute; top:10%; left:10%; width:10px; height:10px; background:#ffd700; border-radius:50%; box-shadow:0 0 10px #ffd700; animation: float 3s infinite;"></div>
+             <div style="position:absolute; top:20%; right:15%; width:8px; height:8px; background:#ff9f43; border-radius:50%; box-shadow:0 0 10px #ff9f43; animation: float 4s infinite reverse;"></div>
           </div>
           
-          <div class="bowl" style="margin:20px auto; width:320px; height:200px;">
-            <div style="display:flex; gap:6px; justify-content:center; align-items:flex-end; padding-bottom:16px; flex-wrap:wrap">
-              ${GAME.targetIngredients.map(it => `<div class="ingredient-pill">${emojiFor(it)} ${shortLabel(it)}</div>`).join('')}
+          <h1 style="font-size:36px; margin-bottom:10px; animation: slideUp 0.6s ease-out;">🎉🌸 Bravissima ${GAME.heroineName}! 🌸🎉</h1>
+          <p style="font-size:18px; margin:0 0 24px; animation: slideUp 0.6s ease-out 0.1s backwards;">Hai completato la ricetta segreta!</p>
+          
+          <div style="
+            background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px);
+            border-radius:24px; padding:30px; margin:0 auto 30px; max-width:550px; 
+            border:1px solid rgba(255,255,255,0.1);
+            transform-origin: center;
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+          ">
+            <div style="font-size:60px; margin-bottom:16px; display:inline-block; animation: bounce 1s infinite alternate;">🍜</div>
+            <h2 style="color:var(--accent); margin:0 0 8px; font-size: 16px; text-transform: uppercase; letter-spacing: 2px;">Il piatto misterioso è</h2>
+            <h1 style="font-size:38px; color:var(--txt); margin:0; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${GAME.dishName}</h1>
+          </div>
+          
+          <div class="bowl" style="margin:0 auto 30px; width:300px; height:180px; animation: slideUp 0.8s ease-out 0.5s backwards;">
+            <div style="display:flex; gap:6px; justify-content:center; align-items:flex-end; padding-bottom:20px; flex-wrap:wrap">
+              ${GAME.targetIngredients.map((it, i) => `<div class="ingredient-pill" style="animation-delay: ${0.8 + (i*0.1)}s">${emojiFor(it)} ${shortLabel(it)}</div>`).join('')}
             </div>
           </div>
           
-          <div style="background: linear-gradient(135deg, rgba(61,220,151,0.1), rgba(255,184,107,0.1)); border-radius:16px; padding:20px; margin:24px auto; max-width:450px; border:1px solid rgba(255,255,255,0.08);">
-            <p style="font-size:16px; color:var(--txt); margin:0 0 8px;">💌 E ora... la vera sorpresa:</p>
-            <p style="font-size:18px; color:var(--accent); margin:0; font-weight:600;">Ti invito ufficialmente a cena per sabato 14 febbraio 2026! 🌹</p>
-            <p style="font-size:15px; margin-top:12px; line-height:1.5;">P.S. Non preoccuparti di rispondere... ho già prenotato per le 21:00! 😎<br>
-            Dai un'occhiata al posto qui: <a href="https://www.thefork.it/ristorante/aroma-asian-gourmet-specialita-ramen-r826159/menu" target="_blank" style="color:#ffb86b; text-decoration:underline;">Aroma Asian Gourmet</a> 🍜</p>
-            <p style="font-size:14px; color:var(--muted); margin-top:12px;">— Con affetto, Giacomino ❤️</p>
+          <div id="invitation-card" style="
+             background: linear-gradient(135deg, rgba(61,220,151,0.1), rgba(255,184,107,0.1)); 
+             border-radius:20px; padding:30px; margin:0 auto; max-width:500px; 
+             border:1px solid rgba(255,255,255,0.15);
+             animation: slideUp 1s cubic-bezier(0.22, 1, 0.36, 1) 1.5s backwards;
+             position: relative;
+             overflow: hidden;
+          ">
+            <div style="position: absolute; top:-50px; left:-50px; width:100px; height:100px; background:linear-gradient(45deg, transparent, rgba(255,255,255,0.1)); transform:rotate(45deg);"></div>
+            
+            <p style="font-size:16px; color:var(--muted); margin:0 0 12px; font-style:italic;">💌 E ora... la vera sorpresa:</p>
+            <p style="font-size:20px; color:var(--txt); margin:0 0 16px; font-weight:700; line-height: 1.4;">Ti invito ufficialmente a cena per <br><span style="color:var(--accent)">sabato 14 febbraio 2026</span>! 🌹</p>
+            
+            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-top: 15px;">
+              <p style="font-size:15px; margin:0; line-height:1.6;">P.S. Non preoccuparti di rispondere... ho già prenotato per le 21:00! 😎</p>
+              <div style="margin-top: 10px;">
+                <a href="https://www.thefork.it/ristorante/aroma-asian-gourmet-specialita-ramen-r826159/menu" target="_blank" style="
+                  display: inline-block;
+                  background: var(--gradient-btn);
+                  color: #0b1020;
+                  text-decoration: none;
+                  padding: 8px 16px;
+                  border-radius: 20px;
+                  font-weight: bold;
+                  font-size: 14px;
+                  box-shadow: 0 4px 10px rgba(56, 239, 125, 0.3);
+                  transition: transform 0.2s;
+                ">Vedi il Menu: Aroma Asian Gourmet 🍜</a>
+              </div>
+            </div>
+            
+            <p style="font-size:15px; color:var(--muted); margin-top:20px; font-family: cursive;">— Con affetto, Giacomino ❤️</p>
           </div>
           
-          <div style="margin-top:20px;">
-            <button class="btn" onclick="restart()" style="opacity:0.6">🔄 Rigioca</button>
+          <div style="margin-top:30px; animation: fadeIn 1s ease-out 2.5s backwards;">
+            <button class="btn" onclick="restart()" style="opacity:0.7; width: auto; display: inline-flex; margin: auto;">🔄 Rigioca il ricordo</button>
           </div>
         </div>
       `;
@@ -669,13 +741,14 @@
      **********************/
     window.startGame = function(){
       AudioSystem.playClick();
-      AudioSystem.startMusic();
+      AudioSystem.startMusic('normal');
       state = { screen: "question", idx: 0, mistakes: 0, collected: [] };
       render();
     };
 
     window.restart = function(){
       AudioSystem.playClick();
+      AudioSystem.startMusic('normal');
       state = { screen: "start", idx: 0, mistakes: 0, collected: [] };
       render();
     };
@@ -708,6 +781,7 @@
         if(state.idx >= GAME.questions.length){
           state.screen = "win";
           setTimeout(() => AudioSystem.playVictory(), 300);
+          setTimeout(() => AudioSystem.startMusic('victory'), 300);
           return setTimeout(render, 700);
         }
         // mostra messaggio e poi re-render
@@ -945,18 +1019,31 @@
     }
 
     function triggerConfetti(){
-      // genera qualche elemento confetti nella area bowl
+      // genera più elementi confetti nell'area bowl
       const wrap = document.getElementById('confetti');
       if(!wrap) return;
-      for(let i=0;i<10;i++){
+      const colors = ['#FFD97D','#FF9AA2','#B8F2E6','#9EE493', '#ff9f43', '#54a0ff'];
+      
+      for(let i=0;i<30;i++){
         const el = document.createElement('i');
         el.style.left = (10 + Math.random()*80) + '%';
-        el.style.background = ['#FFD97D','#FF9AA2','#B8F2E6','#9EE493'][Math.floor(Math.random()*4)];
-        el.style.top = (10 + Math.random()*10) + '%';
+        el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        // Randomize size
+        const size = 6 + Math.random()*8;
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        
+        el.style.top = (20 + Math.random()*20) + '%';
         el.style.transform = `translateY(-10px) rotate(${Math.random()*360}deg)`;
-        el.style.animationDuration = (700 + Math.random()*600) + 'ms';
+        
+        // Randomize animation
+        const duration = 800 + Math.random()*600;
+        el.style.animationDuration = duration + 'ms';
+        el.style.animationDelay = (Math.random()*200) + 'ms';
+        
         wrap.appendChild(el);
-        setTimeout(()=> el.remove(), 1400);
+        setTimeout(()=> el.remove(), duration + 300);
       }
     }
 
